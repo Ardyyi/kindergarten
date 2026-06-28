@@ -159,11 +159,10 @@
       
       <div id="parent-dashboard" style="display: none;">
         <button class="btn primary" onclick="app.screen('my-child')"><i class="ti ti-heart"></i> Mein Kind</button>
-        <button class="btn primary" onclick="app.screen('calendar')"><i class="ti ti-calendar"></i> Kalender</button>
         <button class="btn primary" onclick="app.screen('portfolio')"><i class="ti ti-photo-album"></i> Portfolio</button>
-        <button class="btn primary" onclick="app.screen('dayinfo')"><i class="ti ti-clipboard-text"></i> Tagesberichte</button>
-        <button class="btn primary" onclick="app.screen('messages')"><i class="ti ti-message"></i> Nachrichten</button>
-        <button class="btn primary" onclick="app.screen('absence')"><i class="ti ti-user-x"></i> Abwesenheit melden</button>
+        <button class="btn primary" onclick="app.screen('calendar')"><i class="ti ti-calendar"></i> Termine</button>
+        <button class="btn primary" onclick="app.screen('messages')"><i class="ti ti-message"></i> Chat</button>
+        <button class="btn primary" onclick="app.screen('absence')"><i class="ti ti-user-x"></i> Abwesenheit</button>
       </div>
     </div>
     <div class="bottom-nav">
@@ -274,7 +273,7 @@
       <div style="width: 36px;"></div>
     </div>
     <div class="content">
-      <div class="form-group">
+      <div class="form-group" id="portfolio-child-group">
         <label class="form-label">Kind</label>
         <select class="form-input" id="portfolio-child"></select>
       </div>
@@ -289,10 +288,10 @@
       <div class="form-group">
         <label class="form-label">Kategorie</label>
         <div class="chip-row">
-          <span class="chip active" data-cat="sprache">Sprache</span>
-          <span class="chip" data-cat="motorik">Motorik</span>
-          <span class="chip" data-cat="sozial">Sozial</span>
-          <span class="chip" data-cat="kreativ">Kreativ</span>
+          <span class="chip active" data-cat="sprache">📚 Sprache</span>
+          <span class="chip" data-cat="motorik">🏃 Motorik</span>
+          <span class="chip" data-cat="sozial">🤝 Sozial</span>
+          <span class="chip" data-cat="kreativ">🎨 Kreativ</span>
         </div>
       </div>
       <input type="hidden" id="portfolio-category" value="sprache" />
@@ -394,9 +393,9 @@ const app = {
   user: null,
   data: {
     children: [
-      { id: 1, name: '👧 Emma Schmidt', age: 4, group: 'Sonnenhase', allergies: 'Nussallergie' },
-      { id: 2, name: '👦 Ben Müller', age: 5, group: 'Mondtier', allergies: 'Laktose' },
-      { id: 3, name: '👧 Lisa Fischer', age: 3, group: 'Sonnenhase', allergies: '' }
+      { id: 1, name: 'Emma Schmidt', age: 4, group: 'Sonnenhase', allergies: 'Nussallergie' },
+      { id: 2, name: 'Ben Müller', age: 5, group: 'Mondtier', allergies: 'Laktose' },
+      { id: 3, name: 'Lisa Fischer', age: 3, group: 'Sonnenhase', allergies: '' }
     ],
     events: [
       { id: 1, title: '☀️ Sommerfest', date: '2026-07-15', time: '14:00', desc: 'Im Hof, ab 14 Uhr' },
@@ -404,19 +403,21 @@ const app = {
       { id: 3, title: '🌴 Sommerferien Start', date: '2026-07-27', time: '', desc: 'Kita geschlossen' }
     ],
     portfolio: [
-      { id: 1, child: 'Emma', emoji: '🎨', title: 'Erstes Kunstwerk', desc: 'Emma hat heute mit Farben experimentiert und ein tolles Bild gemalt!', cat: 'kreativ' },
-      { id: 2, child: 'Ben', emoji: '📚', title: 'Wortschatz erweitert', desc: 'Ben lernt schnell neue Worte und kann schon ganze Sätze sprechen.', cat: 'sprache' },
-      { id: 3, child: 'Lisa', emoji: '🏃', title: 'Klettern am Baum', desc: 'Lisa traut sich immer mehr und klettert sehr gewandt!', cat: 'motorik' }
+      { id: 1, child: 'Emma Schmidt', emoji: '🎨', title: 'Erstes Kunstwerk', desc: 'Emma hat heute mit Farben experimentiert und ein tolles Bild gemalt!', cat: 'kreativ', date: '2026-06-28' },
+      { id: 2, child: 'Ben Müller', emoji: '📚', title: 'Wortschatz erweitert', desc: 'Ben lernt schnell neue Worte und kann schon ganze Sätze sprechen.', cat: 'sprache', date: '2026-06-28' },
+      { id: 3, child: 'Lisa Fischer', emoji: '🏃', title: 'Klettern am Baum', desc: 'Lisa traut sich immer mehr und klettert sehr gewandt!', cat: 'motorik', date: '2026-06-28' }
     ],
     messages: [
-      { id: 1, sender: 'Anna', role: 'educator', text: 'Guten Morgen! Emma ist fröhlich angekommen 😊', time: '08:30' },
-      { id: 2, sender: 'Mama Sarah', role: 'parent', text: 'Super! Danke für die Update!', time: '08:35' },
-      { id: 3, sender: 'Anna', role: 'educator', text: 'Wir haben heute im Garten gepflanzt. Emma hat geholfen!', time: '11:00' },
-      { id: 4, sender: 'Mama Sarah', role: 'parent', text: 'Das freut mich zu hören! 🌱', time: '11:15' }
+      { id: 1, sender: 'Anna Schmidt', role: 'educator', text: 'Guten Morgen! Emma ist fröhlich angekommen 😊', time: '08:30' },
+      { id: 2, sender: 'Sarah', role: 'parent', text: 'Super! Danke für die Update!', time: '08:35' },
+      { id: 3, sender: 'Anna Schmidt', role: 'educator', text: 'Wir haben heute im Garten gepflanzt. Emma hat geholfen!', time: '11:00' },
+      { id: 4, sender: 'Sarah', role: 'parent', text: 'Das freut mich zu hören! 🌱', time: '11:15' }
     ],
-    absences: [],
+    absences: [
+      { id: 1, reason: 'Urlaub', from: '2026-06-25', to: '2026-06-27', note: 'Familienurlaub geplant' }
+    ],
     dayinfo: [
-      { group: 'Sonnenhase', activities: 'Morgenkreis, Malen, Spielplatz, Mittagessen', notes: 'Alle Kinder waren sehr aktiv und fröhlich!' }
+      { id: 1, group: 'Sonnenhase', activities: 'Morgenkreis, Malen, Spielplatz, Mittagessen', notes: 'Alle Kinder waren sehr aktiv und fröhlich!', date: '2026-06-28' }
     ]
   },
 
@@ -472,7 +473,7 @@ const app = {
     
     this.data.children.push({
       id: Date.now(),
-      name: `👧 ${name}`,
+      name,
       age,
       group,
       allergies
@@ -491,10 +492,11 @@ const app = {
   updateChildren() {
     const list = document.getElementById('children-list');
     list.innerHTML = this.data.children.map(child => `
-      <div class="child-card">
+      <div class="child-card" onclick="app.viewChild(${child.id})" style="cursor: pointer;">
         <div class="child-info">
-          <h3>${child.name}</h3>
+          <h3>👧 ${child.name}</h3>
           <p>${child.group} • ${child.age} Jahre</p>
+          ${child.allergies ? `<p style="font-size: 11px; color: rgba(255,255,255,0.8); margin-top: 4px;">⚠️ ${child.allergies}</p>` : ''}
         </div>
         <i class="ti ti-chevron-right" style="color: white; opacity: 0.7;"></i>
       </div>
@@ -535,16 +537,24 @@ const app = {
     const sorted = [...this.data.events].sort((a, b) => new Date(a.date) - new Date(b.date));
     
     list.innerHTML = sorted.map(event => `
-      <div class="event-item">
-        <div class="event-date">${new Date(event.date).toLocaleDateString('de-DE')} ${event.time || ''}</div>
-        <div class="event-title">${event.title}</div>
-        ${event.desc ? `<div style="font-size: 12px; color: var(--text3); margin-top: 4px;">${event.desc}</div>` : ''}
+      <div class="event-item" style="position: relative;">
+        <div style="display: flex; justify-content: space-between; align-items: start;">
+          <div style="flex: 1;">
+            <div class="event-date">${new Date(event.date).toLocaleDateString('de-DE')} ${event.time || ''}</div>
+            <div class="event-title">${event.title}</div>
+            ${event.desc ? `<div style="font-size: 12px; color: var(--text3); margin-top: 4px;">${event.desc}</div>` : ''}
+          </div>
+          ${this.user && this.user.role === 'educator' ? `<button onclick="app.deleteEvent(${event.id})" style="background: var(--coral); color: white; border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; margin-left: 8px; flex-shrink: 0;">✕</button>` : ''}
+        </div>
       </div>
     `).join('');
   },
 
   addPortfolio() {
-    const child = document.getElementById('portfolio-child').value;
+    let child = document.getElementById('portfolio-child').value;
+    if (!child && this.user.role === 'parent' && this.data.children.length > 0) {
+      child = this.data.children[0].name;
+    }
     const title = document.getElementById('portfolio-title').value.trim();
     const desc = document.getElementById('portfolio-desc').value.trim();
     const category = document.getElementById('portfolio-category').value;
@@ -554,18 +564,26 @@ const app = {
       return;
     }
     
+    const emojiMap = { sprache: '📚', motorik: '🏃', sozial: '🤝', kreativ: '🎨' };
     this.data.portfolio.push({
       id: Date.now(),
       child,
-      emoji: '📸',
+      emoji: emojiMap[category] || '📸',
       title,
       desc,
-      cat: category
+      cat: category,
+      date: new Date().toLocaleDateString('de-DE')
     });
     
     this.saveData();
     document.getElementById('portfolio-title').value = '';
     document.getElementById('portfolio-desc').value = '';
+    document.getElementById('portfolio-child').value = '';
+    document.querySelectorAll('#add-portfolio-screen .chip').forEach(c => {
+      c.classList.remove('active');
+      if (c.dataset.cat === 'sprache') c.classList.add('active');
+    });
+    document.getElementById('portfolio-category').value = 'sprache';
     
     this.updatePortfolio();
     this.screen('portfolio');
@@ -578,13 +596,20 @@ const app = {
     select.innerHTML = '<option value="">-- Kind wählen --</option>' +
       this.data.children.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
     
-    list.innerHTML = this.data.portfolio.map(item => `
+    let portfolio = this.data.portfolio;
+    if (this.user && this.user.role === 'parent' && this.data.children.length > 0) {
+      const myChild = this.data.children[0].name;
+      portfolio = portfolio.filter(p => p.child === myChild);
+    }
+    
+    list.innerHTML = portfolio.map(item => `
       <div class="portfolio-item">
         <div class="port-emoji">${item.emoji}</div>
         <div class="port-content">
           <div class="port-title">${item.title}</div>
           <div class="port-desc">${item.desc}</div>
           <span class="port-tag">${item.cat}</span>
+          ${this.user && this.user.role === 'parent' ? '' : `<span style="font-size: 11px; color: var(--text3); margin-left: 8px;">• ${item.child}</span>`}
         </div>
       </div>
     `).join('');
@@ -600,7 +625,8 @@ const app = {
       return;
     }
     
-    this.data.dayinfo = [{ group, activities, notes }];
+    this.data.dayinfo.unshift({ id: Date.now(), group, activities, notes, date: new Date().toLocaleDateString('de-DE') });
+    if (this.data.dayinfo.length > 30) this.data.dayinfo.pop();
     this.saveData();
     alert('Tagesrückblick gespeichert!');
     this.screen('home');
@@ -681,13 +707,51 @@ const app = {
     }
     
     const child = this.data.children[0];
+    const absences = this.data.absences.filter(a => new Date(a.from) <= new Date() && new Date(a.to) >= new Date());
+    
     detail.innerHTML = `
       <div class="card">
-        <h2 style="font-size: 24px; margin-bottom: 8px;">${child.name}</h2>
+        <h2 style="font-size: 24px; margin-bottom: 8px;">👧 ${child.name}</h2>
         <p style="color: var(--text2); margin-bottom: 16px;">${child.group} • ${child.age} Jahre</p>
-        ${child.allergies ? `<p style="color: var(--coral); font-weight: 500;">⚠️ Allergien: ${child.allergies}</p>` : ''}
+        ${child.allergies ? `<p style="color: var(--coral); font-weight: 500; margin-bottom: 12px;">⚠️ Allergien: ${child.allergies}</p>` : ''}
+        ${absences.length > 0 ? `<div style="background: var(--mint-l); border-left: 4px solid var(--mint); padding: 10px 12px; border-radius: 8px;"><p style="font-size: 12px; color: var(--mint); font-weight: 500;">📌 Aktuell abwesend (${absences[0].reason})</p></div>` : ''}
       </div>
     `;
+  },
+
+  viewChild(childId) {
+    if (this.user.role === 'parent') {
+      this.screen('my-child');
+    } else {
+      const child = this.data.children.find(c => c.id === childId);
+      if (!child) return;
+      
+      const detail = document.getElementById('child-detail');
+      const portfolio = this.data.portfolio.filter(p => p.child === child.name);
+      const absences = this.data.absences.filter(a => new Date(a.from) <= new Date() && new Date(a.to) >= new Date());
+      
+      detail.innerHTML = `
+        <div class="card">
+          <h2 style="font-size: 24px; margin-bottom: 8px;">👧 ${child.name}</h2>
+          <p style="color: var(--text2); margin-bottom: 12px;">${child.group} • ${child.age} Jahre</p>
+          ${child.allergies ? `<p style="color: var(--coral); font-weight: 500; margin-bottom: 12px;">⚠️ ${child.allergies}</p>` : ''}
+        </div>
+        
+        ${absences.length > 0 ? `<div class="card" style="background: var(--mint-l); border-left: 4px solid var(--mint);"><p style="font-size: 12px; color: var(--mint); font-weight: 500;">📌 ${absences[0].reason}: ${absences[0].from} bis ${absences[0].to}</p></div>` : ''}
+        
+        <div class="card" style="background: var(--mint-l); border-radius: 12px; padding: 12px;">
+          <p style="font-size: 14px; font-weight: 600; color: var(--text);">📚 Portfolio Einträge: ${portfolio.length}</p>
+        </div>
+      `;
+      this.screen('my-child');
+    }
+  },
+
+  deleteEvent(eventId) {
+    if (!confirm('Termin wirklich löschen?')) return;
+    this.data.events = this.data.events.filter(e => e.id !== eventId);
+    this.saveData();
+    this.updateEvents();
   },
 
   screen(name) {
@@ -709,37 +773,59 @@ const app = {
     
     // Setup chip selectors
     if (name === 'add-portfolio') {
-      document.querySelectorAll('#add-portfolio-screen .chip').forEach(chip => {
-        chip.addEventListener('click', function() {
-          document.querySelectorAll('#add-portfolio-screen .chip').forEach(c => c.classList.remove('active'));
-          this.classList.add('active');
-          document.getElementById('portfolio-category').value = this.dataset.cat;
+      if (this.user.role === 'parent') {
+        document.getElementById('portfolio-child-group').style.display = 'none';
+        document.getElementById('portfolio-child').value = this.data.children[0]?.name || '';
+      } else {
+        document.getElementById('portfolio-child-group').style.display = 'block';
+      }
+      
+      const chipContainer = document.querySelector('#add-portfolio-screen .chip-row');
+      if (chipContainer) {
+        chipContainer.querySelectorAll('.chip').forEach(chip => {
+          chip.onclick = () => {
+            chipContainer.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            document.getElementById('portfolio-category').value = chip.dataset.cat;
+          };
         });
-      });
+      }
     }
   },
 
   logout() {
     this.user = null;
     this.saveData();
-    this.screen = function(name) {
+    this.screen = (name) => {
       document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
       document.getElementById(name + '-screen').style.display = 'flex';
     };
-    this.screen('login');
+    localStorage.removeItem('kita-user');
+    localStorage.removeItem('kita-data');
+    location.reload();
   },
 
   saveData() {
-    localStorage.setItem('kita-user', JSON.stringify(this.user));
-    localStorage.setItem('kita-data', JSON.stringify(this.data));
+    try {
+      localStorage.setItem('kita-user', JSON.stringify(this.user));
+      localStorage.setItem('kita-data', JSON.stringify(this.data));
+    } catch(e) {
+      console.error('localStorage voll oder nicht verfügbar:', e);
+      alert('Speicher voll! Bitte Browser-Cache leeren.');
+    }
   },
 
   loadData() {
-    const user = localStorage.getItem('kita-user');
-    const data = localStorage.getItem('kita-data');
-    
-    if (user) this.user = JSON.parse(user);
-    if (data) this.data = JSON.parse(data);
+    try {
+      const user = localStorage.getItem('kita-user');
+      const data = localStorage.getItem('kita-data');
+      
+      if (user) this.user = JSON.parse(user);
+      if (data) this.data = JSON.parse(data);
+    } catch(e) {
+      console.error('Fehler beim Laden der Daten:', e);
+      alert('Daten konnten nicht geladen werden. Bitte Cache leeren.');
+    }
     
     if (this.user) this.showHome();
   },
