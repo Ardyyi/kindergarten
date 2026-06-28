@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KitaKompass</title>
+<title>KitaKompass - Funktional</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,31 +34,12 @@
   .scroll { flex: 1; overflow-y: auto; padding: 0 20px 16px; }
   .scroll::-webkit-scrollbar { display: none; }
   .card { background: var(--card); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; border: 0.5px solid var(--border); }
-  .card-row { display: flex; align-items: center; gap: 12px; }
   .avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 500; flex-shrink: 0; }
-  .avatar.mint { background: var(--mint-l); color: var(--mint-d); }
-  .avatar.blue { background: var(--blue-l); color: var(--blue); }
-  .avatar.coral { background: var(--coral-l); color: var(--coral); }
-  .avatar.yellow { background: var(--yellow-l); color: #8a6d00; }
-  .avatar.purple { background: var(--purple-l); color: var(--purple); }
   .badge { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; border-radius: 9px; background: var(--coral); color: white; font-size: 11px; font-weight: 600; padding: 0 5px; }
   .tag { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; }
   .tag.mint { background: var(--mint-l); color: var(--mint-d); }
   .tag.blue { background: var(--blue-l); color: var(--blue); }
-  .tag.yellow { background: var(--yellow-l); color: #8a6d00; }
   .tag.coral { background: var(--coral-l); color: var(--coral); }
-  .tag.purple { background: var(--purple-l); color: var(--purple); }
-  .tile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .tile { background: var(--card); border-radius: var(--radius); padding: 18px 16px; cursor: pointer; border: 0.5px solid var(--border); display: flex; flex-direction: column; gap: 8px; transition: transform .1s; }
-  .tile:active { transform: scale(0.97); }
-  .tile i { font-size: 28px; }
-  .tile-label { font-size: 13px; font-weight: 500; color: var(--text); }
-  .tile-sub { font-size: 11px; color: var(--text3); }
-  .tile.mint i { color: var(--mint); }
-  .tile.blue i { color: var(--blue); }
-  .tile.yellow i { color: #D4A020; }
-  .tile.coral i { color: var(--coral); }
-  .tile.purple i { color: var(--purple); }
   .field { background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; padding: 14px 16px; font-size: 15px; color: var(--text); width: 100%; outline: none; margin-bottom: 10px; font-family: inherit; }
   .field:focus { border-color: var(--mint); }
   .field-label { font-size: 13px; color: var(--text2); margin-bottom: 6px; font-weight: 500; }
@@ -66,36 +47,8 @@
   .btn:active { opacity: 0.85; }
   .btn.primary { background: var(--mint); color: white; }
   .btn.secondary { background: var(--card); color: var(--text); border: 0.5px solid var(--border); }
-  .btn.outline { background: transparent; color: var(--mint); border: 1.5px solid var(--mint); }
+  .btn.small { padding: 10px 14px; width: auto; margin: 0; }
   .divider { height: 0.5px; background: var(--border); margin: 12px 0; }
-  .sec-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-  .sec-title { font-size: 15px; font-weight: 500; color: var(--text); }
-  .sec-link { font-size: 13px; color: var(--mint); cursor: pointer; }
-  .chip-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 16px; }
-  .chip-row::-webkit-scrollbar { display: none; }
-  .chip { padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; white-space: nowrap; cursor: pointer; border: 1.5px solid var(--border); background: var(--card); color: var(--text2); flex-shrink: 0; }
-  .chip.active { background: var(--mint); color: white; border-color: var(--mint); }
-  .bubble { max-width: 72%; padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.5; margin-bottom: 6px; }
-  .bubble.them { background: var(--card); color: var(--text); border-bottom-left-radius: 4px; }
-  .bubble.me { background: var(--mint); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
-  .chat-input-row { display: flex; gap: 10px; align-items: center; padding: 12px 20px; background: var(--card); border-top: 0.5px solid var(--border); flex-shrink: 0; }
-  .chat-input { flex: 1; background: var(--cream); border: 0.5px solid var(--border); border-radius: 22px; padding: 10px 16px; font-size: 14px; outline: none; font-family: inherit; }
-  .send-btn { width: 36px; height: 36px; border-radius: 50%; background: var(--mint); border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
-  .send-btn i { font-size: 16px; color: white; }
-  .progress-bar { height: 6px; background: var(--mint-l); border-radius: 3px; overflow: hidden; }
-  .progress-fill { height: 100%; background: var(--mint); border-radius: 3px; }
-  .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; text-align: center; }
-  .cal-day { padding: 6px 2px; font-size: 12px; color: var(--text2); border-radius: 8px; cursor: pointer; }
-  .cal-day.today { background: var(--mint); color: white; font-weight: 600; }
-  .cal-day.has-event { position: relative; }
-  .cal-day.has-event::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: var(--coral); }
-  .cal-day.other { color: var(--text3); }
-  .cal-week { font-size: 11px; color: var(--text3); text-align: center; padding: 4px 0; }
-  .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
-  .toggle { width: 44px; height: 26px; border-radius: 13px; background: var(--mint); position: relative; cursor: pointer; border: none; padding: 0; }
-  .toggle::after { content: ''; position: absolute; width: 22px; height: 22px; background: white; border-radius: 50%; top: 2px; right: 2px; transition: right .2s; }
-  .toggle.off { background: var(--text3); }
-  .toggle.off::after { right: auto; left: 2px; }
   .hero { background: linear-gradient(135deg, var(--mint) 0%, #2E9E7A 100%); padding: 20px 20px 28px; color: white; flex-shrink: 0; }
   .hero h2 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
   .hero p { font-size: 14px; opacity: 0.85; }
@@ -106,13 +59,15 @@
   .info-card i { font-size: 22px; color: var(--mint); display: block; margin-bottom: 4px; }
   .info-card .val { font-size: 20px; font-weight: 500; color: var(--text); }
   .info-card .lbl { font-size: 11px; color: var(--text3); }
-  .step-row { display: flex; gap: 8px; margin-bottom: 16px; }
-  .step { flex: 1; height: 4px; border-radius: 2px; background: var(--mint-l); }
-  .step.done { background: var(--mint); }
-  .emoji-row { display: flex; gap: 12px; justify-content: center; padding: 12px 0; }
-  .emoji-opt { font-size: 28px; cursor: pointer; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 12px; border: 2px solid transparent; }
-  .emoji-opt.sel { border-color: var(--mint); background: var(--mint-l); }
-  textarea.field { resize: none; height: 90px; }
+  .chip-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 16px; flex-wrap: wrap; }
+  .chip { padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; cursor: pointer; border: 1.5px solid var(--border); background: var(--card); color: var(--text2); flex-shrink: 0; }
+  .chip.active { background: var(--mint); color: white; border-color: var(--mint); }
+  .event-item { background: var(--card); border-left: 4px solid var(--mint); border-radius: 12px; padding: 12px; margin-bottom: 12px; }
+  .event-time { font-size: 11px; color: var(--text3); }
+  .event-title { font-size: 14px; font-weight: 500; color: var(--text); }
+  .event-desc { font-size: 12px; color: var(--text2); margin-top: 4px; }
+  .delete-btn { color: var(--coral); cursor: pointer; font-size: 18px; }
+  textarea { resize: none; height: 90px; }
 </style>
 </head>
 <body>
@@ -127,15 +82,17 @@
         <h1 style="font-size:28px; font-weight:500; color:var(--text);">KitaKompass</h1>
         <p style="font-size:14px; color:var(--text2); margin-top:6px;">Gemeinsam für Ihr Kind</p>
       </div>
-      <div style="margin-bottom:8px;"><div class="field-label">E-Mail-Adresse</div><input class="field" type="email" placeholder="name@beispiel.de"></div>
-      <div style="margin-bottom:20px;"><div class="field-label">Passwort</div><input class="field" type="password" placeholder="••••••••"></div>
-      <button class="btn primary" onclick="go('s-home')"><i class="ti ti-login"></i> Anmelden</button>
-      <button class="btn secondary" onclick="go('s-home')">Als Gast fortfahren</button>
-      <p style="text-align:center; font-size:13px; color:var(--mint); margin-top:12px; cursor:pointer;">Passwort vergessen?</p>
-      <div class="divider" style="margin:20px 0;"></div>
-      <div style="display:flex; align-items:center; gap:10px; padding:14px; background:var(--mint-l); border-radius:12px;">
-        <i class="ti ti-shield-check" style="color:var(--mint); font-size:22px;"></i>
-        <p style="font-size:12px; color:var(--mint-d);">DSGVO-konform · Ende-zu-Ende verschlüsselt · Zertifiziert</p>
+      <div style="margin-bottom:8px;"><div class="field-label">Name</div><input class="field" id="login-name" placeholder="Dein Name"></div>
+      <div style="margin-bottom:20px;"><div class="field-label">Rolle</div>
+        <select class="field" id="login-role">
+          <option value="educator">Erzieher/in</option>
+          <option value="parent">Eltern</option>
+        </select>
+      </div>
+      <button class="btn primary" onclick="app.login()"><i class="ti ti-login"></i> Anmelden</button>
+      <div style="display:flex; align-items:center; gap:10px; padding:14px; background:var(--mint-l); border-radius:12px; margin-top:16px;">
+        <i class="ti ti-info-circle" style="color:var(--mint); font-size:22px;"></i>
+        <p style="font-size:12px; color:var(--mint-d);">Demo: Alle Daten lokal gespeichert</p>
       </div>
     </div>
   </div>
@@ -145,570 +102,461 @@
     <div class="status" style="background:var(--mint); color:rgba(255,255,255,0.85);"><span>9:41</span><span>●●●</span></div>
     <div class="hero">
       <p style="font-size:13px; opacity:.8; margin-bottom:4px;">Guten Morgen 👋</p>
-      <h2>Hallo, Lea!</h2>
-      <p>Sonnenhase-Gruppe · 12 Kinder heute</p>
+      <h2 id="home-name">Hallo!</h2>
+      <p id="home-role">Rolle</p>
     </div>
     <div class="scroll" style="margin-top:-16px;">
-      <div class="card" style="margin-bottom:16px;">
-        <div style="display:flex; gap:12px; overflow-x:auto; padding-bottom:4px;">
-          <div style="display:flex; align-items:center; gap:8px; background:var(--coral-l); border-radius:12px; padding:10px 14px; flex-shrink:0; cursor:pointer;" onclick="go('s-messages')">
-            <i class="ti ti-message-circle" style="color:var(--coral); font-size:20px;"></i>
-            <div><div style="font-size:12px; color:var(--text2);">Nachrichten</div><div style="font-size:18px; font-weight:500; color:var(--text);">3 <span class="badge">neu</span></div></div>
-          </div>
-          <div style="display:flex; align-items:center; gap:8px; background:var(--blue-l); border-radius:12px; padding:10px 14px; flex-shrink:0; cursor:pointer;" onclick="go('s-calendar')">
-            <i class="ti ti-calendar-event" style="color:var(--blue); font-size:20px;"></i>
-            <div><div style="font-size:12px; color:var(--text2);">Nächster Termin</div><div style="font-size:13px; font-weight:500; color:var(--text);">Di, Elternabend</div></div>
-          </div>
-          <div style="display:flex; align-items:center; gap:8px; background:var(--yellow-l); border-radius:12px; padding:10px 14px; flex-shrink:0; cursor:pointer;" onclick="go('s-absence')">
-            <i class="ti ti-user-x" style="color:#D4A020; font-size:20px;"></i>
-            <div><div style="font-size:12px; color:var(--text2);">Abwesenheiten</div><div style="font-size:18px; font-weight:500; color:var(--text);">2 heute</div></div>
-          </div>
+      <div id="educator-home" style="display:none;">
+        <div class="info-row" style="margin-bottom:16px;">
+          <div class="info-card"><i class="ti ti-users"></i><div class="val" id="children-count">0</div><div class="lbl">Kinder</div></div>
+          <div class="info-card"><i class="ti ti-calendar"></i><div class="val" id="events-count">0</div><div class="lbl">Termine</div></div>
         </div>
+        <button class="btn primary" onclick="app.go('s-children')"><i class="ti ti-users"></i> Kinderprofile</button>
+        <button class="btn primary" onclick="app.go('s-calendar')"><i class="ti ti-calendar"></i> Kalender</button>
+        <button class="btn primary" onclick="app.go('s-portfolio')"><i class="ti ti-photo-album"></i> Portfolio</button>
+        <button class="btn primary" onclick="app.go('s-dayinfo')"><i class="ti ti-clipboard-text"></i> Tagesrückblick</button>
       </div>
-      <div class="sec-header"><span class="sec-title">Schnellzugriff</span></div>
-      <div class="tile-grid" style="margin-bottom:16px;">
-        <div class="tile mint" onclick="go('s-messages')"><i class="ti ti-message-dots"></i><span class="tile-label">Nachrichten</span><span class="tile-sub">3 ungelesen</span></div>
-        <div class="tile blue" onclick="go('s-portfolio')"><i class="ti ti-photo-album"></i><span class="tile-label">Portfolio</span><span class="tile-sub">Ben & Mia</span></div>
-        <div class="tile yellow" onclick="go('s-calendar')"><i class="ti ti-calendar"></i><span class="tile-label">Kalender</span><span class="tile-sub">2 Termine</span></div>
-        <div class="tile coral" onclick="go('s-dayinfo')"><i class="ti ti-clipboard-text"></i><span class="tile-label">Tagesrückblick</span><span class="tile-sub">Heute eintragen</span></div>
-        <div class="tile purple" onclick="go('s-documents')"><i class="ti ti-file-text"></i><span class="tile-label">Dokumente</span><span class="tile-sub">1 neu</span></div>
-        <div class="tile" style="border:1.5px dashed var(--border); background:transparent;" onclick="go('s-absence')"><i class="ti ti-user-off" style="color:var(--text3); font-size:28px;"></i><span class="tile-label" style="color:var(--text2);">Abwesenheit</span><span class="tile-sub">Melden</span></div>
-      </div>
-      <div class="sec-header"><span class="sec-title">Pinnwand</span><span class="sec-link">Alle</span></div>
-      <div class="card">
-        <div style="display:flex; gap:10px; align-items:flex-start;">
-          <div class="avatar mint" style="width:36px; height:36px; font-size:13px;">KL</div>
-          <div>
-            <div style="font-size:13px; font-weight:500; color:var(--text); margin-bottom:2px;">Kita-Leitung</div>
-            <p style="font-size:13px; color:var(--text2); line-height:1.5;">🌞 Erinnerung: Sommerfest am 15. Juli! Bitte bis Freitag anmelden.</p>
-            <span class="tag mint" style="margin-top:8px; font-size:11px;"><i class="ti ti-calendar"></i> Heute</span>
-          </div>
-        </div>
+      <div id="parent-home" style="display:none;">
+        <button class="btn primary" onclick="app.go('s-calendar')"><i class="ti ti-calendar"></i> Kalender</button>
+        <button class="btn primary" onclick="app.go('s-portfolio')"><i class="ti ti-photo-album"></i> Portfolio</button>
+        <button class="btn primary" onclick="app.go('s-absence')"><i class="ti ti-user-x"></i> Abwesenheit melden</button>
       </div>
     </div>
     <div class="bottom-nav">
-      <div class="nav-item active" onclick="go('s-home')"><i class="ti ti-home"></i><span>Start</span></div>
-      <div class="nav-item" onclick="go('s-messages')"><i class="ti ti-message-circle"></i><span>Nachrichten</span></div>
-      <div class="nav-item" onclick="go('s-portfolio')"><i class="ti ti-photo-album"></i><span>Portfolio</span></div>
-      <div class="nav-item" onclick="go('s-calendar')"><i class="ti ti-calendar"></i><span>Kalender</span></div>
-      <div class="nav-item" onclick="go('s-settings')"><i class="ti ti-user"></i><span>Profil</span></div>
+      <div class="nav-item active" onclick="app.go('s-home')"><i class="ti ti-home"></i><span>Start</span></div>
+      <div class="nav-item" onclick="app.go('s-calendar')"><i class="ti ti-calendar"></i><span>Kalender</span></div>
+      <div class="nav-item" onclick="app.go('s-portfolio')"><i class="ti ti-photo-album"></i><span>Portfolio</span></div>
+      <div class="nav-item" onclick="app.logout()"><i class="ti ti-logout"></i><span>Logout</span></div>
     </div>
   </div>
 
-  <!-- NACHRICHTEN -->
-  <div class="screen" id="s-messages">
+  <!-- KINDERPROFILE (ERZIEHER) -->
+  <div class="screen" id="s-children">
     <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="go('s-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Nachrichten</span></div>
-    <div class="chip-row" style="padding:0 20px 4px;">
-      <div class="chip active">Alle</div><div class="chip">Gruppe</div><div class="chip">Eltern</div><div class="chip">Erzieher</div>
+    <div class="nav"><div class="back-btn" onclick="app.go('s-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Kinderprofile</span></div>
+    <div class="scroll" id="children-list" style="padding-top:12px;"></div>
+    <div style="padding: 16px 20px; background: var(--card); border-top: 0.5px solid var(--border);">
+      <button class="btn primary" onclick="app.go('s-add-child')"><i class="ti ti-plus"></i> Kind hinzufügen</button>
     </div>
+  </div>
+
+  <!-- KIND HINZUFÜGEN -->
+  <div class="screen" id="s-add-child">
+    <div class="status"><span>9:41</span><span>●●●</span></div>
+    <div class="nav"><div class="back-btn" onclick="app.go('s-children')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Kind hinzufügen</span></div>
     <div class="scroll">
-      <div class="card" style="cursor:pointer;" onclick="go('s-chat')">
-        <div class="card-row">
-          <div class="avatar coral">FM</div>
-          <div style="flex:1; min-width:0;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:3px;"><span style="font-size:15px; font-weight:500; color:var(--text);">Familie Müller</span><span style="font-size:12px; color:var(--text3);">09:12</span></div>
-            <p style="font-size:13px; color:var(--text2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Ben hat heute Kopfschmerzen, kommt etwas…</p>
-          </div>
-          <span class="badge">2</span>
-        </div>
-      </div>
-      <div class="card" style="cursor:pointer;" onclick="go('s-chat')">
-        <div class="card-row">
-          <div class="avatar blue" style="font-size:20px; background:#E8F0FF; color:var(--blue);">🌻</div>
-          <div style="flex:1; min-width:0;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:3px;"><span style="font-size:15px; font-weight:500; color:var(--text);">Sonnenhase-Gruppe</span><span style="font-size:12px; color:var(--text3);">08:45</span></div>
-            <p style="font-size:13px; color:var(--text2);">Morgen bitte Gummistiefel mitbringen 🌧️</p>
-          </div>
-          <span class="badge">1</span>
-        </div>
-      </div>
-      <div class="card" style="cursor:pointer;" onclick="go('s-chat')">
-        <div class="card-row">
-          <div class="avatar purple">FK</div>
-          <div style="flex:1; min-width:0;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:3px;"><span style="font-size:15px; font-weight:500; color:var(--text);">Familie Koch</span><span style="font-size:12px; color:var(--text3);">Gestern</span></div>
-            <p style="font-size:13px; color:var(--text3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">✓✓ Vielen Dank für die schnelle Antwort!</p>
-          </div>
-        </div>
-      </div>
-      <button class="btn outline" style="margin-top:8px;"><i class="ti ti-edit"></i> Neue Nachricht</button>
-    </div>
-    <div class="bottom-nav">
-      <div class="nav-item" onclick="go('s-home')"><i class="ti ti-home"></i><span>Start</span></div>
-      <div class="nav-item active"><i class="ti ti-message-circle"></i><span>Nachrichten</span></div>
-      <div class="nav-item" onclick="go('s-portfolio')"><i class="ti ti-photo-album"></i><span>Portfolio</span></div>
-      <div class="nav-item" onclick="go('s-calendar')"><i class="ti ti-calendar"></i><span>Kalender</span></div>
-      <div class="nav-item" onclick="go('s-settings')"><i class="ti ti-user"></i><span>Profil</span></div>
-    </div>
-  </div>
-
-  <!-- CHAT -->
-  <div class="screen" id="s-chat">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav">
-      <div class="back-btn" onclick="go('s-messages')"><i class="ti ti-arrow-left"></i></div>
-      <div class="avatar coral" style="width:36px; height:36px; font-size:13px;">FM</div>
-      <div style="flex:1;"><div class="nav-title">Familie Müller</div><div style="font-size:11px; color:var(--mint);">● Online</div></div>
-      <i class="ti ti-video" style="font-size:22px; color:var(--text2);"></i>
-    </div>
-    <div style="flex:1; overflow-y:auto; padding:0 20px 12px; display:flex; flex-direction:column; gap:4px;">
-      <div style="text-align:center; margin:8px 0;"><span style="font-size:11px; color:var(--text3); background:var(--cream); padding:4px 12px; border-radius:20px;">Heute</span></div>
-      <div class="bubble them">Guten Morgen! Ben hat heute Kopfschmerzen, er kommt etwas später mit Papa.</div>
-      <div style="font-size:11px; color:var(--text3); padding:0 4px; margin-bottom:8px;">09:12</div>
-      <div class="bubble them">Gibt es heute etwas Besonderes zu essen? Er verträgt keine Nüsse 🥜</div>
-      <div style="font-size:11px; color:var(--text3); padding:0 4px;">09:13</div>
-      <div class="bubble me">Guten Morgen! Kein Problem, wir bereiten alles vor. Heute gibt es Nudeln mit Tomatensoße – nussfrei! 😊</div>
-      <div style="font-size:11px; color:var(--text3); padding:0 4px; text-align:right;">09:15 ✓✓</div>
-      <div style="display:flex; align-items:center; gap:6px; background:var(--mint-l); border-radius:12px; padding:10px 12px; margin-top:8px;">
-        <i class="ti ti-language" style="color:var(--mint); font-size:18px;"></i>
-        <span style="font-size:12px; color:var(--mint-d);">Übersetzung verfügbar · Tippen zum Anzeigen</span>
-      </div>
-    </div>
-    <div class="chat-input-row">
-      <i class="ti ti-paperclip" style="font-size:22px; color:var(--text2); cursor:pointer;"></i>
-      <input class="chat-input" placeholder="Nachricht schreiben…">
-      <button class="send-btn"><i class="ti ti-send"></i></button>
-    </div>
-  </div>
-
-  <!-- PORTFOLIO -->
-  <div class="screen" id="s-portfolio">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="go('s-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Portfolio</span></div>
-    <div class="scroll">
-      <div style="background:linear-gradient(135deg,var(--blue),#3A82D4); border-radius:var(--radius); padding:20px; margin-bottom:16px; color:white; cursor:pointer;" onclick="go('s-child-profile')">
-        <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
-          <div class="avatar" style="background:rgba(255,255,255,0.25); color:white; width:52px; height:52px; font-size:20px;">🧒</div>
-          <div><div style="font-size:18px; font-weight:500;">Ben Müller</div><div style="font-size:13px; opacity:.8;">Sonnenhase · 4 Jahre</div></div>
-        </div>
-        <div class="progress-bar" style="background:rgba(255,255,255,0.2); margin-bottom:6px;"><div class="progress-fill" style="width:68%; background:white;"></div></div>
-        <div style="font-size:12px; opacity:.8;">12 Portfolioeinträge · Zuletzt aktualisiert: heute</div>
-      </div>
-      <div style="background:linear-gradient(135deg,var(--coral),#D4603A); border-radius:var(--radius); padding:20px; margin-bottom:16px; color:white; cursor:pointer;" onclick="go('s-child-profile')">
-        <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
-          <div class="avatar" style="background:rgba(255,255,255,0.25); color:white; width:52px; height:52px; font-size:20px;">👧</div>
-          <div><div style="font-size:18px; font-weight:500;">Mia Koch</div><div style="font-size:13px; opacity:.8;">Sonnenhase · 3 Jahre</div></div>
-        </div>
-        <div class="progress-bar" style="background:rgba(255,255,255,0.2); margin-bottom:6px;"><div class="progress-fill" style="width:45%; background:white;"></div></div>
-        <div style="font-size:12px; opacity:.8;">7 Portfolioeinträge · Zuletzt: vor 3 Tagen</div>
-      </div>
-      <div class="sec-header"><span class="sec-title">Entwicklungsbereiche</span></div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px;">
-        <div class="card" style="text-align:center; padding:14px;"><i class="ti ti-message" style="font-size:22px; color:var(--mint);"></i><div style="font-size:13px; color:var(--text); margin:4px 0;">Sprache</div><div style="font-size:12px; color:var(--mint);">Stark ↑</div></div>
-        <div class="card" style="text-align:center; padding:14px;"><i class="ti ti-run" style="font-size:22px; color:var(--blue);"></i><div style="font-size:13px; color:var(--text); margin:4px 0;">Motorik</div><div style="font-size:12px; color:var(--blue);">Gut ↑</div></div>
-        <div class="card" style="text-align:center; padding:14px;"><i class="ti ti-heart-handshake" style="font-size:22px; color:var(--coral);"></i><div style="font-size:13px; color:var(--text); margin:4px 0;">Sozialverhalten</div><div style="font-size:12px; color:var(--coral);">Wächst ↗</div></div>
-        <div class="card" style="text-align:center; padding:14px;"><i class="ti ti-palette" style="font-size:22px; color:var(--purple);"></i><div style="font-size:13px; color:var(--text); margin:4px 0;">Kreativität</div><div style="font-size:12px; color:var(--purple);">Sehr gut ★</div></div>
-      </div>
-      <button class="btn primary" onclick="go('s-portfolio-create')"><i class="ti ti-plus"></i> Neuer Portfolioeintrag</button>
-      <button class="btn secondary"><i class="ti ti-download"></i> Als PDF exportieren</button>
-    </div>
-    <div class="bottom-nav">
-      <div class="nav-item" onclick="go('s-home')"><i class="ti ti-home"></i><span>Start</span></div>
-      <div class="nav-item" onclick="go('s-messages')"><i class="ti ti-message-circle"></i><span>Nachrichten</span></div>
-      <div class="nav-item active"><i class="ti ti-photo-album"></i><span>Portfolio</span></div>
-      <div class="nav-item" onclick="go('s-calendar')"><i class="ti ti-calendar"></i><span>Kalender</span></div>
-      <div class="nav-item" onclick="go('s-settings')"><i class="ti ti-user"></i><span>Profil</span></div>
-    </div>
-  </div>
-
-  <!-- KINDERPROFIL -->
-  <div class="screen" id="s-child-profile">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div style="background:linear-gradient(135deg,var(--blue),#3A82D4); padding:20px 20px 32px; color:white; flex-shrink:0;">
-      <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px; cursor:pointer;" onclick="go('s-portfolio')">
-        <i class="ti ti-arrow-left" style="font-size:20px;"></i><span style="font-size:14px; opacity:.85;">Portfolio</span>
-      </div>
-      <div style="text-align:center;">
-        <div style="width:72px; height:72px; background:rgba(255,255,255,0.25); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:36px; margin:0 auto 12px;">🧒</div>
-        <h2 style="font-size:22px; font-weight:500; margin-bottom:4px;">Ben Müller</h2>
-        <p style="font-size:13px; opacity:.8;">Sonnenhase-Gruppe · 4 Jahre 2 Monate</p>
-      </div>
-    </div>
-    <div class="scroll" style="margin-top:-16px;">
-      <div class="chip-row" style="background:var(--cream); padding:12px 20px 8px; border-radius:16px 16px 0 0; margin:0 0 12px;">
-        <div class="chip active">Alle</div><div class="chip">Fotos</div><div class="chip">Lerngeschichten</div><div class="chip">Beobachtungen</div>
-      </div>
-      <div class="card">
-        <div style="background:var(--mint-l); border-radius:10px; height:120px; display:flex; align-items:center; justify-content:center; margin-bottom:10px;">
-          <i class="ti ti-photo" style="font-size:40px; color:var(--mint);"></i>
-        </div>
-        <div style="font-size:14px; font-weight:500; color:var(--text); margin-bottom:4px;">Mein erstes Bild mit Fingerfarben</div>
-        <div style="display:flex; gap:8px; align-items:center;">
-          <span class="tag purple" style="font-size:11px;"><i class="ti ti-palette"></i> Kreativität</span>
-          <span style="font-size:11px; color:var(--text3);">vor 2 Tagen · Freigegeben</span>
-        </div>
-      </div>
-      <div class="card">
-        <div style="font-size:14px; font-weight:500; color:var(--text); margin-bottom:6px;">Lerngeschichte: Im Garten</div>
-        <p style="font-size:13px; color:var(--text2); line-height:1.6; margin-bottom:8px;">Ben hat heute einen Regenwurm entdeckt und seinen Freunden erklärt, wie Regenwürmer die Erde lockern…</p>
-        <div style="display:flex; gap:6px;">
-          <span class="tag mint" style="font-size:11px;"><i class="ti ti-message"></i> Sprache</span>
-          <span class="tag blue" style="font-size:11px;"><i class="ti ti-brain"></i> Kognition</span>
-        </div>
-      </div>
-      <button class="btn primary" onclick="go('s-portfolio-create')"><i class="ti ti-plus"></i> Eintrag hinzufügen</button>
-    </div>
-  </div>
-
-  <!-- PORTFOLIO ERSTELLEN -->
-  <div class="screen" id="s-portfolio-create">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="go('s-portfolio')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Neuer Eintrag</span></div>
-    <div class="scroll">
-      <div class="step-row"><div class="step done"></div><div class="step done"></div><div class="step"></div></div>
-      <div class="field-label">Art des Eintrags</div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px;">
-        <div style="border:2px solid var(--mint); background:var(--mint-l); border-radius:12px; padding:14px; text-align:center; cursor:pointer;">
-          <i class="ti ti-camera" style="font-size:24px; color:var(--mint); display:block; margin-bottom:6px;"></i>
-          <span style="font-size:13px; color:var(--mint-d); font-weight:500;">Foto / Video</span>
-        </div>
-        <div style="border:1.5px solid var(--border); background:var(--card); border-radius:12px; padding:14px; text-align:center; cursor:pointer;">
-          <i class="ti ti-notebook" style="font-size:24px; color:var(--text2); display:block; margin-bottom:6px;"></i>
-          <span style="font-size:13px; color:var(--text2);">Lerngeschichte</span>
-        </div>
-        <div style="border:1.5px solid var(--border); background:var(--card); border-radius:12px; padding:14px; text-align:center; cursor:pointer;">
-          <i class="ti ti-eye" style="font-size:24px; color:var(--text2); display:block; margin-bottom:6px;"></i>
-          <span style="font-size:13px; color:var(--text2);">Beobachtung</span>
-        </div>
-        <div style="border:1.5px solid var(--border); background:var(--card); border-radius:12px; padding:14px; text-align:center; cursor:pointer;">
-          <i class="ti ti-template" style="font-size:24px; color:var(--text2); display:block; margin-bottom:6px;"></i>
-          <span style="font-size:13px; color:var(--text2);">Vorlage nutzen</span>
-        </div>
-      </div>
-      <div style="background:var(--mint-l); border:2px dashed var(--mint); border-radius:12px; padding:24px; text-align:center; margin-bottom:16px; cursor:pointer;">
-        <i class="ti ti-cloud-upload" style="font-size:32px; color:var(--mint); display:block; margin-bottom:8px;"></i>
-        <span style="font-size:14px; color:var(--mint-d);">Foto / Video hochladen</span>
-        <div style="font-size:12px; color:var(--text3); margin-top:4px;">oder Kamera öffnen</div>
-      </div>
-      <div class="field-label">Titel</div>
-      <input class="field" placeholder="z. B. Mein erstes Bild">
-      <div class="field-label">Beschreibung</div>
-      <textarea class="field" placeholder="Was hat das Kind gemacht oder entdeckt?"></textarea>
-      <div class="field-label">Entwicklungsbereich</div>
-      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
-        <span class="tag mint" style="cursor:pointer;">Sprache</span>
-        <span class="tag blue" style="cursor:pointer;">Motorik</span>
-        <span class="tag coral" style="cursor:pointer; opacity:.5;">Sozialverhalten</span>
-        <span class="tag purple" style="cursor:pointer;">Kreativität</span>
-      </div>
-      <div class="toggle-row"><span style="font-size:14px; color:var(--text);">Für Eltern freigeben</span><button class="toggle"></button></div>
-      <button class="btn primary"><i class="ti ti-check"></i> Eintrag speichern</button>
+      <div class="field-label">Name</div>
+      <input class="field" id="child-name" placeholder="z.B. Ben Müller">
+      <div class="field-label">Alter (Jahre)</div>
+      <input class="field" id="child-age" type="number" placeholder="z.B. 4">
+      <div class="field-label">Gruppe</div>
+      <input class="field" id="child-group" placeholder="z.B. Sonnenhase">
+      <div class="field-label">Notizen</div>
+      <textarea class="field" id="child-notes" placeholder="Besonderheiten, Allergien..."></textarea>
+      <button class="btn primary" onclick="app.addChild()"><i class="ti ti-check"></i> Speichern</button>
     </div>
   </div>
 
   <!-- KALENDER -->
   <div class="screen" id="s-calendar">
     <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="go('s-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Kalender</span>
-      <button class="btn primary" style="width:auto; padding:8px 14px; font-size:13px; margin:0; border-radius:10px;" onclick="go('s-event-create')"><i class="ti ti-plus"></i> Neu</button>
+    <div class="nav"><div class="back-btn" onclick="app.go('s-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Kalender</span>
+      <button class="btn primary small" id="add-event-btn" onclick="app.go('s-add-event')" style="display:none;"><i class="ti ti-plus"></i></button>
     </div>
     <div class="scroll">
-      <div class="card" style="margin-bottom:16px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-          <i class="ti ti-chevron-left" style="font-size:20px; color:var(--text2); cursor:pointer;"></i>
-          <span style="font-size:16px; font-weight:500; color:var(--text);">Juli 2025</span>
-          <i class="ti ti-chevron-right" style="font-size:20px; color:var(--text2); cursor:pointer;"></i>
+      <div class="card">
+        <div style="text-align:center; margin-bottom:12px;">
+          <h3 id="calendar-month" style="font-size:16px; font-weight:500; color:var(--text);">Kalender</h3>
         </div>
-        <div class="cal-grid">
-          <div class="cal-week">Mo</div><div class="cal-week">Di</div><div class="cal-week">Mi</div><div class="cal-week">Do</div><div class="cal-week">Fr</div><div class="cal-week">Sa</div><div class="cal-week">So</div>
-          <div class="cal-day other">30</div><div class="cal-day other">1</div><div class="cal-day">2</div><div class="cal-day has-event">3</div><div class="cal-day">4</div><div class="cal-day">5</div><div class="cal-day">6</div>
-          <div class="cal-day">7</div><div class="cal-day has-event">8</div><div class="cal-day">9</div><div class="cal-day">10</div><div class="cal-day">11</div><div class="cal-day">12</div><div class="cal-day">13</div>
-          <div class="cal-day today">14</div><div class="cal-day has-event">15</div><div class="cal-day">16</div><div class="cal-day">17</div><div class="cal-day has-event">18</div><div class="cal-day">19</div><div class="cal-day">20</div>
-          <div class="cal-day">21</div><div class="cal-day">22</div><div class="cal-day has-event">23</div><div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div>
-        </div>
+        <div id="events-list"></div>
       </div>
-      <div class="sec-header"><span class="sec-title">Kommende Termine</span></div>
-      <div class="card" style="border-left:4px solid var(--mint);">
-        <div style="display:flex; gap:12px; align-items:flex-start;">
-          <div style="background:var(--mint-l); border-radius:10px; padding:8px 12px; text-align:center; flex-shrink:0;"><div style="font-size:20px; font-weight:500; color:var(--mint);">15</div><div style="font-size:11px; color:var(--mint-d);">JUL</div></div>
-          <div><div style="font-size:15px; font-weight:500; color:var(--text); margin-bottom:2px;">🌞 Sommerfest</div>
-          <p style="font-size:13px; color:var(--text2);">15:00 – 18:00 Uhr · Kita-Garten</p>
-          <div style="display:flex; gap:8px; margin-top:8px;"><span class="tag mint" style="font-size:11px; cursor:pointer;">Zusagen</span><span class="tag coral" style="font-size:11px; cursor:pointer;">Absagen</span></div></div>
-        </div>
-      </div>
-      <div class="card" style="border-left:4px solid var(--blue);">
-        <div style="display:flex; gap:12px; align-items:flex-start;">
-          <div style="background:var(--blue-l); border-radius:10px; padding:8px 12px; text-align:center; flex-shrink:0;"><div style="font-size:20px; font-weight:500; color:var(--blue);">18</div><div style="font-size:11px; color:var(--blue);">JUL</div></div>
-          <div><div style="font-size:15px; font-weight:500; color:var(--text); margin-bottom:2px;">📋 Elternabend</div>
-          <p style="font-size:13px; color:var(--text2);">19:00 Uhr · Gruppenraum Sonnenhase</p>
-          <span class="tag blue" style="margin-top:8px; font-size:11px;">12 zugesagt</span></div>
-        </div>
-      </div>
-      <div class="card" style="border-left:4px solid var(--coral);">
-        <div style="display:flex; gap:12px; align-items:flex-start;">
-          <div style="background:var(--coral-l); border-radius:10px; padding:8px 12px; text-align:center; flex-shrink:0;"><div style="font-size:20px; font-weight:500; color:var(--coral);">23</div><div style="font-size:11px; color:var(--coral);">JUL</div></div>
-          <div><div style="font-size:15px; font-weight:500; color:var(--text); margin-bottom:2px;">🚌 Ausflug Tierpark</div>
-          <p style="font-size:13px; color:var(--text2);">9:00 Uhr · Bitte Einverst. mitbringen</p>
-          <span class="tag yellow" style="margin-top:8px; font-size:11px;">3 ausstehend</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="bottom-nav">
-      <div class="nav-item" onclick="go('s-home')"><i class="ti ti-home"></i><span>Start</span></div>
-      <div class="nav-item" onclick="go('s-messages')"><i class="ti ti-message-circle"></i><span>Nachrichten</span></div>
-      <div class="nav-item" onclick="go('s-portfolio')"><i class="ti ti-photo-album"></i><span>Portfolio</span></div>
-      <div class="nav-item active"><i class="ti ti-calendar"></i><span>Kalender</span></div>
-      <div class="nav-item" onclick="go('s-settings')"><i class="ti ti-user"></i><span>Profil</span></div>
     </div>
   </div>
 
-  <!-- TERMIN ERSTELLEN -->
-  <div class="screen" id="s-event-create">
+  <!-- EVENT ERSTELLEN -->
+  <div class="screen" id="s-add-event">
     <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="go('s-calendar')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Termin erstellen</span></div>
+    <div class="nav"><div class="back-btn" onclick="app.go('s-calendar')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Termin erstellen</span></div>
     <div class="scroll">
-      <div class="step-row"><div class="step done"></div><div class="step done"></div><div class="step"></div></div>
-      <div class="field-label">Titel des Termins</div>
-      <input class="field" placeholder="z. B. Sommerfest">
+      <div class="field-label">Titel</div>
+      <input class="field" id="event-title" placeholder="z.B. Sommerfest">
       <div class="field-label">Datum</div>
-      <input class="field" type="date" value="2025-07-15">
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-        <div><div class="field-label">Beginn</div><input class="field" type="time" value="15:00"></div>
-        <div><div class="field-label">Ende</div><input class="field" type="time" value="18:00"></div>
+      <input class="field" id="event-date" type="date">
+      <div class="field-label">Zeit</div>
+      <input class="field" id="event-time" type="time">
+      <div class="field-label">Beschreibung</div>
+      <textarea class="field" id="event-desc" placeholder="Weitere Details..."></textarea>
+      <button class="btn primary" onclick="app.addEvent()"><i class="ti ti-check"></i> Speichern</button>
+    </div>
+  </div>
+
+  <!-- PORTFOLIO -->
+  <div class="screen" id="s-portfolio">
+    <div class="status"><span>9:41</span><span>●●●</span></div>
+    <div class="nav"><div class="back-btn" onclick="app.go('s-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Portfolio</span>
+      <button class="btn primary small" id="add-portfolio-btn" onclick="app.go('s-add-portfolio')" style="display:none;"><i class="ti ti-plus"></i></button>
+    </div>
+    <div class="scroll" id="portfolio-list"></div>
+  </div>
+
+  <!-- PORTFOLIO EINTRAG ERSTELLEN -->
+  <div class="screen" id="s-add-portfolio">
+    <div class="status"><span>9:41</span><span>●●●</span></div>
+    <div class="nav"><div class="back-btn" onclick="app.go('s-portfolio')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Neuer Eintrag</span></div>
+    <div class="scroll">
+      <div class="field-label">Kind</div>
+      <select class="field" id="portfolio-child"></select>
+      <div class="field-label">Titel</div>
+      <input class="field" id="portfolio-title" placeholder="z.B. Mein erstes Bild">
+      <div class="field-label">Beschreibung</div>
+      <textarea class="field" id="portfolio-desc" placeholder="Was hat das Kind gemacht?"></textarea>
+      <div class="field-label">Kategorie</div>
+      <div class="chip-row" id="portfolio-chips">
+        <span class="chip active" data-cat="sprache">Sprache</span>
+        <span class="chip" data-cat="motorik">Motorik</span>
+        <span class="chip" data-cat="sozial">Sozialverhalten</span>
+        <span class="chip" data-cat="kreativ">Kreativität</span>
       </div>
-      <div class="field-label">Ort</div>
-      <input class="field" placeholder="z. B. Kita-Garten">
-      <div class="field-label">Art des Termins</div>
-      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
-        <div class="chip active">Fest / Feier</div><div class="chip">Ausflug</div><div class="chip">Elternabend</div><div class="chip">Schließtag</div>
-      </div>
-      <div class="field-label">Sichtbar für</div>
-      <div style="display:flex; gap:8px; margin-bottom:16px;">
-        <div class="chip active">Alle</div><div class="chip">Sonnenhase</div><div class="chip">Regenbogen</div>
-      </div>
-      <div class="toggle-row"><span style="font-size:14px; color:var(--text);">Rückmeldung anfordern</span><button class="toggle"></button></div>
-      <div class="toggle-row"><span style="font-size:14px; color:var(--text);">Erinnerung senden (1 Tag vorher)</span><button class="toggle"></button></div>
-      <button class="btn primary"><i class="ti ti-calendar-plus"></i> Termin speichern</button>
+      <input type="hidden" id="portfolio-category" value="sprache">
+      <button class="btn primary" onclick="app.addPortfolio()"><i class="ti ti-check"></i> Speichern</button>
     </div>
   </div>
 
   <!-- TAGESRÜCKBLICK -->
   <div class="screen" id="s-dayinfo">
     <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="go('s-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Tagesrückblick</span><span style="font-size:13px; color:var(--text3);">Mo, 14. Jul</span></div>
+    <div class="nav"><div class="back-btn" onclick="app.go('s-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Tagesrückblick</span></div>
     <div class="scroll">
-      <div class="chip-row"><div class="chip active">Sonnenhase</div><div class="chip">Regenbogen</div><div class="chip">Alle</div></div>
-      <div class="sec-header"><span class="sec-title">Gruppe heute</span></div>
-      <div class="info-row" style="margin-bottom:16px;">
-        <div class="info-card"><i class="ti ti-users"></i><div class="val">10</div><div class="lbl">Anwesend</div></div>
-        <div class="info-card"><i class="ti ti-user-x"></i><div class="val">2</div><div class="lbl">Abwesend</div></div>
-        <div class="info-card"><i class="ti ti-fork"></i><div class="val">🍝</div><div class="lbl">Nudeln</div></div>
+      <div class="field-label">Gruppe</div>
+      <select class="field" id="dayinfo-group">
+        <option value="">-- Bitte wählen --</option>
+      </select>
+      <div class="field-label">Wie war die Stimmung?</div>
+      <div class="chip-row" id="dayinfo-chips">
+        <span class="chip" data-mood="sad">😢</span>
+        <span class="chip" data-mood="neutral">😐</span>
+        <span class="chip active" data-mood="happy">😊</span>
+        <span class="chip" data-mood="very-happy">🤩</span>
       </div>
-      <div class="field-label">Wie war die Stimmung heute?</div>
-      <div class="emoji-row">
-        <div class="emoji-opt">😴</div><div class="emoji-opt">😐</div><div class="emoji-opt sel">😊</div><div class="emoji-opt">🤩</div>
-      </div>
+      <input type="hidden" id="dayinfo-mood" value="happy">
       <div class="field-label">Aktivitäten heute</div>
-      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
-        <span class="tag mint" style="cursor:pointer;">🌿 Gartenzeit</span>
-        <span class="tag blue" style="cursor:pointer;">🎨 Malen</span>
-        <span class="tag yellow" style="cursor:pointer;">🧩 Basteln</span>
-        <span class="tag coral" style="cursor:pointer; opacity:.5;">+ Weitere</span>
-      </div>
-      <div class="field-label">Notizen für Eltern</div>
-      <textarea class="field" placeholder="Was war heute besonders?">Heute hatten wir Spaß im Garten beim Matschen. Ben hat eine Lupe gefunden und Insekten beobachtet! 🔍🐛</textarea>
-      <div class="field-label">Foto hinzufügen (optional)</div>
-      <div style="background:var(--mint-l); border:2px dashed var(--mint); border-radius:12px; padding:20px; text-align:center; margin-bottom:16px; cursor:pointer;">
-        <i class="ti ti-camera" style="font-size:28px; color:var(--mint); display:block; margin-bottom:4px;"></i>
-        <span style="font-size:13px; color:var(--mint-d);">Foto aufnehmen oder hochladen</span>
-      </div>
-      <button class="btn primary"><i class="ti ti-send"></i> An Eltern senden</button>
+      <textarea class="field" id="dayinfo-activities" placeholder="Was haben die Kinder heute gemacht?"></textarea>
+      <div class="field-label">Besonderheiten</div>
+      <textarea class="field" id="dayinfo-notes" placeholder="Wichtiges zum Weitergeben..."></textarea>
+      <button class="btn primary" onclick="app.saveDayInfo()"><i class="ti ti-check"></i> Speichern</button>
     </div>
   </div>
 
-  <!-- ABWESENHEIT -->
+  <!-- ABWESENHEIT MELDEN (ELTERN) -->
   <div class="screen" id="s-absence">
     <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="go('s-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Abwesenheit melden</span></div>
+    <div class="nav"><div class="back-btn" onclick="app.go('s-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Abwesenheit melden</span></div>
     <div class="scroll">
-      <div style="background:var(--yellow-l); border:1.5px solid var(--yellow); border-radius:14px; padding:14px 16px; margin-bottom:16px; display:flex; gap:10px; align-items:center;">
-        <i class="ti ti-info-circle" style="font-size:22px; color:#D4A020; flex-shrink:0;"></i>
-        <p style="font-size:13px; color:#7a5800; line-height:1.5;">Bitte bis 8:00 Uhr melden, damit die Gruppe gut planen kann.</p>
-      </div>
-      <div class="field-label">Kind</div>
-      <div style="display:flex; gap:10px; margin-bottom:16px;">
-        <div style="flex:1; border:2px solid var(--mint); background:var(--mint-l); border-radius:12px; padding:12px; text-align:center; cursor:pointer;">
-          <div style="font-size:24px;">🧒</div><div style="font-size:13px; color:var(--mint-d); font-weight:500; margin-top:4px;">Ben</div>
-        </div>
-        <div style="flex:1; border:1.5px solid var(--border); border-radius:12px; padding:12px; text-align:center; cursor:pointer; opacity:.6;">
-          <div style="font-size:24px;">👧</div><div style="font-size:13px; color:var(--text2); margin-top:4px;">Mia</div>
-        </div>
-      </div>
       <div class="field-label">Grund</div>
-      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
-        <div class="chip active">🤧 Krank</div><div class="chip">🏖️ Urlaub</div><div class="chip">🏥 Arzt</div><div class="chip">Sonstiges</div>
+      <div class="chip-row" id="absence-chips">
+        <span class="chip active" data-reason="sick">🤧 Krank</span>
+        <span class="chip" data-reason="vacation">🏖️ Urlaub</span>
+        <span class="chip" data-reason="doctor">🏥 Arzt</span>
+        <span class="chip" data-reason="other">Sonstiges</span>
       </div>
+      <input type="hidden" id="absence-reason" value="sick">
       <div class="field-label">Von</div>
-      <input class="field" type="date" value="2025-07-14">
-      <div class="field-label">Voraussichtlich wieder da ab</div>
-      <input class="field" type="date" value="2025-07-16">
-      <div class="field-label">Optionale Notiz</div>
-      <input class="field" placeholder="z. B. Fieber seit gestern">
-      <button class="btn primary"><i class="ti ti-check"></i> Abwesenheit melden</button>
-      <div class="divider"></div>
-      <div class="sec-header"><span class="sec-title">Aktuelle Übersicht</span></div>
-      <div class="card">
-        <div style="font-size:13px; color:var(--text2); margin-bottom:10px; font-weight:500;">Sonnenhase-Gruppe · Heute</div>
-        <div style="display:flex; gap:8px;">
-          <div style="flex:1; text-align:center; background:var(--mint-l); border-radius:10px; padding:12px;"><div style="font-size:22px; font-weight:500; color:var(--mint);">10</div><div style="font-size:11px; color:var(--mint-d);">Anwesend</div></div>
-          <div style="flex:1; text-align:center; background:var(--coral-l); border-radius:10px; padding:12px;"><div style="font-size:22px; font-weight:500; color:var(--coral);">2</div><div style="font-size:11px; color:var(--coral);">Abwesend</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- DOKUMENTE -->
-  <div class="screen" id="s-documents">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="go('s-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Dokumente</span></div>
-    <div class="scroll">
-      <div class="chip-row"><div class="chip active">Alle</div><div class="chip">Elternbriefe</div><div class="chip">Formulare</div><div class="chip">Einwilligungen</div></div>
-      <div style="background:var(--mint-l); border:1.5px solid var(--mint); border-radius:14px; padding:14px 16px; margin-bottom:14px;">
-        <div style="display:flex; gap:10px; align-items:center;">
-          <i class="ti ti-file-text" style="font-size:24px; color:var(--mint); flex-shrink:0;"></i>
-          <div style="flex:1;"><div style="font-size:14px; font-weight:500; color:var(--text);">Einwilligung Ausflug Tierpark</div><div style="font-size:12px; color:var(--text2);">Bis 22. Juli · Bitte unterschreiben</div></div>
-          <span class="badge">NEU</span>
-        </div>
-        <button class="btn primary" style="margin-top:12px; margin-bottom:0; font-size:13px; padding:10px;"><i class="ti ti-signature"></i> Digital unterschreiben</button>
-      </div>
-      <div class="card">
-        <div style="display:flex; gap:10px; align-items:center;">
-          <i class="ti ti-file-description" style="font-size:24px; color:var(--blue); flex-shrink:0;"></i>
-          <div style="flex:1;"><div style="font-size:14px; font-weight:500; color:var(--text);">Elternbrief Juli 2025</div><div style="font-size:12px; color:var(--text3);">01.07.2025 · Gelesen ✓</div></div>
-          <i class="ti ti-download" style="font-size:20px; color:var(--text2); cursor:pointer;"></i>
-        </div>
-      </div>
-      <div class="card">
-        <div style="display:flex; gap:10px; align-items:center;">
-          <i class="ti ti-file-description" style="font-size:24px; color:var(--purple); flex-shrink:0;"></i>
-          <div style="flex:1;"><div style="font-size:14px; font-weight:500; color:var(--text);">Anmeldeformular 2025/26</div><div style="font-size:12px; color:var(--text3);">Ausfüllen bis August</div></div>
-          <i class="ti ti-chevron-right" style="font-size:20px; color:var(--text2);"></i>
-        </div>
-      </div>
-      <button class="btn outline" style="margin-top:4px;"><i class="ti ti-upload"></i> Dokument hochladen</button>
-    </div>
-  </div>
-
-  <!-- EINSTELLUNGEN -->
-  <div class="screen" id="s-settings">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div style="background:linear-gradient(135deg,var(--mint),var(--mint-d)); padding:24px 20px 32px; color:white; flex-shrink:0; text-align:center;">
-      <div style="width:72px; height:72px; background:rgba(255,255,255,0.25); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 12px;">👩‍🏫</div>
-      <h2 style="font-size:20px; font-weight:500; margin-bottom:4px;">Lea Schmidt</h2>
-      <p style="font-size:13px; opacity:.85;">Erzieherin · Sonnenhase-Gruppe</p>
-      <span style="background:rgba(255,255,255,0.2); padding:4px 14px; border-radius:20px; font-size:12px; margin-top:8px; display:inline-block;">Erzieher</span>
-    </div>
-    <div class="scroll" style="margin-top:-16px;">
-      <div class="card" style="margin-bottom:16px;">
-        <div style="font-size:11px; font-weight:500; color:var(--text2); margin-bottom:10px; text-transform:uppercase; letter-spacing:.5px;">Benachrichtigungen</div>
-        <div class="toggle-row" style="padding:8px 0;"><span style="font-size:14px; color:var(--text);">Push-Benachrichtigungen</span><button class="toggle"></button></div>
-        <div class="divider"></div>
-        <div class="toggle-row" style="padding:8px 0;"><span style="font-size:14px; color:var(--text);">Neue Nachrichten</span><button class="toggle"></button></div>
-        <div class="divider"></div>
-        <div class="toggle-row" style="padding:8px 0;"><span style="font-size:14px; color:var(--text);">Terminererinnerungen</span><button class="toggle off"></button></div>
-      </div>
-      <div class="card" style="margin-bottom:16px;">
-        <div style="font-size:11px; font-weight:500; color:var(--text2); margin-bottom:10px; text-transform:uppercase; letter-spacing:.5px;">Sicherheit</div>
-        <div style="display:flex; align-items:center; gap:10px; padding:8px 0; cursor:pointer;">
-          <i class="ti ti-lock" style="font-size:20px; color:var(--text2);"></i>
-          <span style="font-size:14px; color:var(--text); flex:1;">Passwort ändern</span>
-          <i class="ti ti-chevron-right" style="font-size:18px; color:var(--text3);"></i>
-        </div>
-        <div class="divider"></div>
-        <div class="toggle-row" style="padding:8px 0;"><span style="font-size:14px; color:var(--text);">Zwei-Faktor-Authentifizierung</span><button class="toggle off"></button></div>
-      </div>
-      <div class="card" style="margin-bottom:16px; cursor:pointer;" onclick="go('s-admin')">
-        <div style="display:flex; align-items:center; gap:10px; padding:4px 0;">
-          <i class="ti ti-building" style="font-size:20px; color:var(--purple);"></i>
-          <span style="font-size:14px; color:var(--text); flex:1;">Kita-Administration</span>
-          <span class="tag purple" style="font-size:11px;">Admin</span>
-          <i class="ti ti-chevron-right" style="font-size:18px; color:var(--text3);"></i>
-        </div>
-      </div>
-      <button class="btn secondary" style="color:var(--coral); border-color:var(--coral-l);" onclick="go('s-login')"><i class="ti ti-logout"></i> Abmelden</button>
-    </div>
-    <div class="bottom-nav">
-      <div class="nav-item" onclick="go('s-home')"><i class="ti ti-home"></i><span>Start</span></div>
-      <div class="nav-item" onclick="go('s-messages')"><i class="ti ti-message-circle"></i><span>Nachrichten</span></div>
-      <div class="nav-item" onclick="go('s-portfolio')"><i class="ti ti-photo-album"></i><span>Portfolio</span></div>
-      <div class="nav-item" onclick="go('s-calendar')"><i class="ti ti-calendar"></i><span>Kalender</span></div>
-      <div class="nav-item active"><i class="ti ti-user"></i><span>Profil</span></div>
-    </div>
-  </div>
-
-  <!-- ADMIN -->
-  <div class="screen" id="s-admin">
-    <div class="status" style="background:var(--purple); color:rgba(255,255,255,0.85);"><span>9:41</span><span>●●●</span></div>
-    <div style="background:linear-gradient(135deg,var(--purple),#6A5FBF); padding:20px 20px 28px; color:white; flex-shrink:0;">
-      <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; cursor:pointer;" onclick="go('s-settings')">
-        <i class="ti ti-arrow-left" style="font-size:20px;"></i><span style="font-size:14px; opacity:.85;">Profil</span>
-      </div>
-      <div style="display:flex; align-items:center; gap:12px;">
-        <i class="ti ti-building" style="font-size:32px; opacity:.9;"></i>
-        <div><h2 style="font-size:20px; font-weight:500;">Administration</h2><p style="font-size:13px; opacity:.8;">Kita Sonnenhügel</p></div>
-      </div>
-    </div>
-    <div class="scroll" style="margin-top:-16px;">
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px;">
-        <div class="info-card" style="background:var(--purple-l);"><i class="ti ti-users" style="color:var(--purple);"></i><div class="val">48</div><div class="lbl">Kinder</div></div>
-        <div class="info-card" style="background:var(--mint-l);"><i class="ti ti-heart-handshake" style="color:var(--mint);"></i><div class="val">12</div><div class="lbl">Erzieher</div></div>
-        <div class="info-card" style="background:var(--blue-l);"><i class="ti ti-door-enter" style="color:var(--blue);"></i><div class="val">3</div><div class="lbl">Gruppen</div></div>
-        <div class="info-card" style="background:var(--coral-l);"><i class="ti ti-user-x" style="color:var(--coral);"></i><div class="val">4</div><div class="lbl">Heute absent</div></div>
-      </div>
-      <div class="sec-header"><span class="sec-title">Verwaltung</span></div>
-      <div class="card" style="margin-bottom:10px; cursor:pointer;">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <i class="ti ti-users-group" style="font-size:22px; color:var(--purple);"></i>
-          <div style="flex:1;"><div style="font-size:14px; font-weight:500; color:var(--text);">Gruppen & Kinder</div><div style="font-size:12px; color:var(--text3);">Zuordnung, Profile verwalten</div></div>
-          <i class="ti ti-chevron-right" style="font-size:18px; color:var(--text3);"></i>
-        </div>
-      </div>
-      <div class="card" style="margin-bottom:10px; cursor:pointer;">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <i class="ti ti-shield-lock" style="font-size:22px; color:var(--blue);"></i>
-          <div style="flex:1;"><div style="font-size:14px; font-weight:500; color:var(--text);">Rechte & Rollen</div><div style="font-size:12px; color:var(--text3);">Eltern, Erzieher, Admin</div></div>
-          <i class="ti ti-chevron-right" style="font-size:18px; color:var(--text3);"></i>
-        </div>
-      </div>
-      <div class="card" style="margin-bottom:10px; cursor:pointer;">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <i class="ti ti-chart-bar" style="font-size:22px; color:var(--mint);"></i>
-          <div style="flex:1;"><div style="font-size:14px; font-weight:500; color:var(--text);">Berichte & Statistiken</div><div style="font-size:12px; color:var(--text3);">Anwesenheit, Portfoliostand</div></div>
-          <i class="ti ti-chevron-right" style="font-size:18px; color:var(--text3);"></i>
-        </div>
-      </div>
-      <div style="margin-top:8px; background:var(--purple-l); border-radius:14px; padding:14px 16px; display:flex; gap:10px; align-items:flex-start;">
-        <i class="ti ti-shield-check" style="font-size:20px; color:var(--purple); flex-shrink:0; margin-top:2px;"></i>
-        <p style="font-size:13px; color:var(--purple); line-height:1.5;">Alle Daten werden DSGVO-konform gespeichert. Einwilligungsverwaltung im Bereich Dokumente.</p>
-      </div>
+      <input class="field" id="absence-from" type="date">
+      <div class="field-label">Bis</div>
+      <input class="field" id="absence-to" type="date">
+      <div class="field-label">Notiz</div>
+      <textarea class="field" id="absence-note" placeholder="z.B. Fieber"></textarea>
+      <button class="btn primary" onclick="app.reportAbsence()"><i class="ti ti-check"></i> Melden</button>
     </div>
   </div>
 
 </div>
 
 <script>
-function go(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  const t = document.getElementById(id);
-  if (t) { t.classList.add('active'); t.scrollTop = 0; }
-}
-document.querySelectorAll('.chip').forEach(c => {
-  c.addEventListener('click', function() {
-    const row = this.closest('.chip-row') || this.parentElement;
-    row.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
-    this.classList.add('active');
-  });
-});
-document.querySelectorAll('.toggle').forEach(t => {
-  t.addEventListener('click', function() { this.classList.toggle('off'); });
-});
-document.querySelectorAll('.emoji-opt').forEach(e => {
-  e.addEventListener('click', function() {
-    this.closest('.emoji-row').querySelectorAll('.emoji-opt').forEach(x => x.classList.remove('sel'));
-    this.classList.add('sel');
-  });
-});
+const app = {
+  user: null,
+  data: {
+    children: [],
+    events: [],
+    portfolio: [],
+    dayinfo: [],
+    absences: []
+  },
+
+  init() {
+    this.loadData();
+    this.setupEventListeners();
+    document.getElementById('event-date').valueAsDate = new Date();
+    document.getElementById('absence-from').valueAsDate = new Date();
+  },
+
+  setupEventListeners() {
+    const setupChips = (selector, inputId) => {
+      document.querySelectorAll(selector).forEach(chip => {
+        chip.addEventListener('click', function() {
+          const parent = this.parentElement;
+          parent.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+          this.classList.add('active');
+          const attr = this.dataset.cat || this.dataset.mood || this.dataset.reason;
+          document.getElementById(inputId).value = attr;
+        });
+      });
+    };
+    setupChips('#portfolio-chips .chip', 'portfolio-category');
+    setupChips('#dayinfo-chips .chip', 'dayinfo-mood');
+    setupChips('#absence-chips .chip', 'absence-reason');
+  },
+
+  login() {
+    const name = document.getElementById('login-name').value.trim();
+    const role = document.getElementById('login-role').value;
+    if (!name) { alert('Bitte Namen eingeben'); return; }
+    this.user = { name, role };
+    this.saveData();
+    this.showHome();
+  },
+
+  logout() {
+    this.user = null;
+    this.saveData();
+    this.go('s-login');
+  },
+
+  showHome() {
+    document.getElementById('home-name').textContent = `Hallo, ${this.user.name}!`;
+    document.getElementById('home-role').textContent = this.user.role === 'educator' ? 'Erzieher/in' : 'Eltern';
+    
+    if (this.user.role === 'educator') {
+      document.getElementById('educator-home').style.display = 'block';
+      document.getElementById('parent-home').style.display = 'none';
+      document.getElementById('children-count').textContent = this.data.children.length;
+      document.getElementById('events-count').textContent = this.data.events.length;
+      document.getElementById('add-event-btn').style.display = 'flex';
+      document.getElementById('add-portfolio-btn').style.display = 'flex';
+    } else {
+      document.getElementById('educator-home').style.display = 'none';
+      document.getElementById('parent-home').style.display = 'block';
+      document.getElementById('add-event-btn').style.display = 'none';
+      document.getElementById('add-portfolio-btn').style.display = 'none';
+    }
+    this.go('s-home');
+  },
+
+  addChild() {
+    const name = document.getElementById('child-name').value.trim();
+    const age = document.getElementById('child-age').value;
+    const group = document.getElementById('child-group').value.trim();
+    const notes = document.getElementById('child-notes').value.trim();
+    
+    if (!name || !age || !group) { alert('Bitte alle Felder ausfüllen'); return; }
+    
+    this.data.children.push({
+      id: Date.now(),
+      name, age, group, notes,
+      createdAt: new Date().toLocaleDateString('de-DE')
+    });
+    this.saveData();
+    document.getElementById('child-name').value = '';
+    document.getElementById('child-age').value = '';
+    document.getElementById('child-group').value = '';
+    document.getElementById('child-notes').value = '';
+    this.updateChildrenList();
+    this.go('s-children');
+  },
+
+  updateChildrenList() {
+    const list = document.getElementById('children-list');
+    list.innerHTML = this.data.children.map(child => `
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:start;">
+          <div>
+            <div style="font-size:16px; font-weight:500; color:var(--text);">${child.name}</div>
+            <div style="font-size:13px; color:var(--text2);">${child.group} • ${child.age} Jahre</div>
+            ${child.notes ? `<div style="font-size:12px; color:var(--text3); margin-top:4px;">${child.notes}</div>` : ''}
+          </div>
+          <span class="delete-btn" onclick="app.deleteChild(${child.id})">✕</span>
+        </div>
+      </div>
+    `).join('');
+  },
+
+  deleteChild(id) {
+    if (!confirm('Kind wirklich löschen?')) return;
+    this.data.children = this.data.children.filter(c => c.id !== id);
+    this.saveData();
+    this.updateChildrenList();
+  },
+
+  addEvent() {
+    const title = document.getElementById('event-title').value.trim();
+    const date = document.getElementById('event-date').value;
+    const time = document.getElementById('event-time').value;
+    const desc = document.getElementById('event-desc').value.trim();
+    
+    if (!title || !date) { alert('Bitte Titel und Datum ausfüllen'); return; }
+    
+    this.data.events.push({
+      id: Date.now(),
+      title, date, time, desc,
+      createdAt: new Date().toLocaleDateString('de-DE')
+    });
+    this.saveData();
+    document.getElementById('event-title').value = '';
+    document.getElementById('event-desc').value = '';
+    document.getElementById('event-time').value = '';
+    this.updateCalendar();
+    this.go('s-calendar');
+  },
+
+  updateCalendar() {
+    const list = document.getElementById('events-list');
+    const sorted = [...this.data.events].sort((a, b) => new Date(a.date) - new Date(b.date));
+    list.innerHTML = sorted.length === 0 ? '<p style="text-align:center; color:var(--text3);">Keine Termine</p>' :
+      sorted.map(event => `
+      <div class="event-item">
+        <div style="display:flex; justify-content:space-between;">
+          <div>
+            <div class="event-time">${new Date(event.date).toLocaleDateString('de-DE')} ${event.time || ''}</div>
+            <div class="event-title">${event.title}</div>
+            ${event.desc ? `<div class="event-desc">${event.desc}</div>` : ''}
+          </div>
+          ${app.user.role === 'educator' ? `<span class="delete-btn" onclick="app.deleteEvent(${event.id})">✕</span>` : ''}
+        </div>
+      </div>
+    `).join('');
+  },
+
+  deleteEvent(id) {
+    this.data.events = this.data.events.filter(e => e.id !== id);
+    this.saveData();
+    this.updateCalendar();
+  },
+
+  addPortfolio() {
+    const childId = document.getElementById('portfolio-child').value;
+    const title = document.getElementById('portfolio-title').value.trim();
+    const desc = document.getElementById('portfolio-desc').value.trim();
+    const category = document.getElementById('portfolio-category').value;
+    
+    if (!childId || !title || !desc) { alert('Bitte alle Felder ausfüllen'); return; }
+    
+    this.data.portfolio.push({
+      id: Date.now(),
+      childId: parseInt(childId),
+      title, desc, category,
+      createdAt: new Date().toLocaleDateString('de-DE')
+    });
+    this.saveData();
+    document.getElementById('portfolio-title').value = '';
+    document.getElementById('portfolio-desc').value = '';
+    this.updatePortfolioList();
+    this.go('s-portfolio');
+  },
+
+  updatePortfolioList() {
+    const list = document.getElementById('portfolio-list');
+    const childSelect = document.getElementById('portfolio-child');
+    childSelect.innerHTML = '<option value="">-- Kind wählen --</option>' + 
+      this.data.children.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+    
+    list.innerHTML = this.data.portfolio.length === 0 ? '<p style="text-align:center; color:var(--text3); margin:20px 0;">Keine Einträge</p>' :
+      this.data.portfolio.map(entry => {
+      const child = this.data.children.find(c => c.id === entry.childId);
+      return `
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:start;">
+            <div style="flex:1;">
+              <div style="font-size:13px; color:var(--text2);">${child?.name || 'Unbekannt'}</div>
+              <div style="font-size:14px; font-weight:500; color:var(--text); margin:4px 0;">${entry.title}</div>
+              <div style="font-size:12px; color:var(--text3);">${entry.desc.substring(0, 60)}...</div>
+              <span class="tag" style="margin-top:8px; background:var(--mint-l); color:var(--mint-d);">${entry.category}</span>
+            </div>
+            ${app.user.role === 'educator' ? `<span class="delete-btn" onclick="app.deletePortfolio(${entry.id})">✕</span>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+  },
+
+  deletePortfolio(id) {
+    this.data.portfolio = this.data.portfolio.filter(p => p.id !== id);
+    this.saveData();
+    this.updatePortfolioList();
+  },
+
+  saveDayInfo() {
+    const group = document.getElementById('dayinfo-group').value;
+    const mood = document.getElementById('dayinfo-mood').value;
+    const activities = document.getElementById('dayinfo-activities').value.trim();
+    const notes = document.getElementById('dayinfo-notes').value.trim();
+    
+    if (!activities) { alert('Bitte Aktivitäten eingeben'); return; }
+    
+    this.data.dayinfo.push({
+      id: Date.now(),
+      group, mood, activities, notes,
+      date: new Date().toLocaleDateString('de-DE')
+    });
+    this.saveData();
+    alert('Tagesrückblick gespeichert!');
+    document.getElementById('dayinfo-activities').value = '';
+    document.getElementById('dayinfo-notes').value = '';
+    this.go('s-home');
+  },
+
+  reportAbsence() {
+    const reason = document.getElementById('absence-reason').value;
+    const from = document.getElementById('absence-from').value;
+    const to = document.getElementById('absence-to').value;
+    const note = document.getElementById('absence-note').value.trim();
+    
+    if (!from || !to) { alert('Bitte Daten ausfüllen'); return; }
+    
+    this.data.absences.push({
+      id: Date.now(),
+      reason, from, to, note,
+      reportedAt: new Date().toLocaleDateString('de-DE')
+    });
+    this.saveData();
+    alert('Abwesenheit gemeldet!');
+    document.getElementById('absence-note').value = '';
+    this.go('s-home');
+  },
+
+  go(screenId) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(screenId).classList.add('active');
+    
+    if (screenId === 's-children') this.updateChildrenList();
+    if (screenId === 's-calendar') this.updateCalendar();
+    if (screenId === 's-portfolio') this.updatePortfolioList();
+    if (screenId === 's-dayinfo') this.setupDayInfoGroups();
+  },
+
+  setupDayInfoGroups() {
+    const groupSelect = document.getElementById('dayinfo-group');
+    const groups = [...new Set(this.data.children.map(c => c.group))];
+    groupSelect.innerHTML = '<option value="">-- Bitte wählen --</option>' + 
+      groups.map(g => `<option value="${g}">${g}</option>`).join('');
+  },
+
+  saveData() {
+    localStorage.setItem('kitakompass-user', JSON.stringify(this.user));
+    localStorage.setItem('kitakompass-data', JSON.stringify(this.data));
+  },
+
+  loadData() {
+    const user = localStorage.getItem('kitakompass-user');
+    const data = localStorage.getItem('kitakompass-data');
+    
+    if (user) this.user = JSON.parse(user);
+    if (data) this.data = JSON.parse(data);
+    
+    if (this.user) this.showHome();
+  }
+};
+
+app.init();
 </script>
 </body>
 </html>
