@@ -3,412 +3,387 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KitaKompass - Vollständiges Verwaltungssystem</title>
+<title>KitaKompass - Kindergarten Management</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --mint: #4CAF91; --mint-l: #E8F6F1; --mint-d: #2E7D65;
-    --yellow: #F5C842; --yellow-l: #FEF9E7;
-    --blue: #5BA4E5; --blue-l: #EBF4FF;
-    --coral: #F07A5A; --coral-l: #FEF0EB;
-    --purple: #8B7DD8; --purple-l: #F0EEFF;
+    --yellow: #F5C842; --blue: #5BA4E5; --coral: #F07A5A;
     --cream: #FAFAF7; --card: #FFFFFF;
     --text: #2C2C2A; --text2: #6B6B68; --text3: #A0A09D;
     --border: rgba(0,0,0,0.08); --radius: 16px;
   }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F0F4F2; display: flex; justify-content: center; padding: 1rem 0 3rem; min-height: 100vh; }
-  .phone { width: 390px; background: var(--cream); border-radius: 40px; overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.15); position: relative; display: flex; flex-direction: column; height: 90vh; max-height: 900px; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F0F4F2; display: flex; justify-content: center; padding: 20px 0; min-height: 100vh; }
+  .phone { width: 390px; background: var(--cream); border-radius: 40px; overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.15); display: flex; flex-direction: column; height: 844px; }
   .screen { display: none; flex-direction: column; height: 100%; }
   .screen.active { display: flex; }
-  .status { height: 44px; background: inherit; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-size: 12px; color: var(--text2); font-weight: 500; flex-shrink: 0; }
-  .nav { display: flex; align-items: center; padding: 0 20px 12px; gap: 12px; flex-shrink: 0; }
-  .back-btn { width: 36px; height: 36px; border-radius: 50%; background: var(--card); border: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; }
-  .back-btn i { font-size: 18px; color: var(--text2); }
-  .nav-title { font-size: 17px; font-weight: 500; color: var(--text); flex: 1; }
-  .nav-badge { background: var(--coral); color: white; font-size: 10px; padding: 2px 6px; border-radius: 10px; }
-  .bottom-nav { height: 72px; background: var(--card); border-top: 0.5px solid var(--border); display: flex; align-items: center; justify-content: space-around; padding: 0 8px; flex-shrink: 0; }
-  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; padding: 6px 12px; border-radius: 12px; flex: 1; position: relative; }
-  .nav-item i { font-size: 22px; color: var(--text3); }
-  .nav-item span { font-size: 10px; color: var(--text3); }
-  .nav-item.active i, .nav-item.active span { color: var(--mint); }
-  .nav-item .badge-dot { width: 6px; height: 6px; background: var(--coral); border-radius: 50%; position: absolute; top: 4px; right: 6px; }
-  .scroll { flex: 1; overflow-y: auto; padding: 0 20px 16px; }
-  .scroll::-webkit-scrollbar { width: 4px; }
-  .scroll::-webkit-scrollbar-track { background: transparent; }
-  .scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  .status { height: 44px; background: inherit; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; font-size: 12px; color: var(--text2); flex-shrink: 0; }
+  .header { background: linear-gradient(135deg, var(--mint) 0%, #2E9E7A 100%); color: white; padding: 24px 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; }
+  .header-title { font-size: 18px; font-weight: 600; }
+  .header-back { background: rgba(255,255,255,0.2); border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; }
+  .content { flex: 1; overflow-y: auto; padding: 20px; }
+  .content::-webkit-scrollbar { width: 4px; }
+  .content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  .bottom-nav { height: 68px; background: var(--card); border-top: 0.5px solid var(--border); display: flex; justify-content: space-around; align-items: center; flex-shrink: 0; }
+  .nav-btn { background: none; border: none; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; color: var(--text3); font-size: 11px; padding: 8px; }
+  .nav-btn i { font-size: 22px; }
+  .nav-btn.active { color: var(--mint); }
+  .nav-btn.active i { color: var(--mint); }
+  
   .card { background: var(--card); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; border: 0.5px solid var(--border); }
-  .card-hover { cursor: pointer; transition: transform .2s, box-shadow .2s; }
-  .card-hover:active { transform: scale(0.98); }
-  .field { background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; padding: 14px 16px; font-size: 15px; color: var(--text); width: 100%; outline: none; margin-bottom: 10px; font-family: inherit; }
-  .field:focus { border-color: var(--mint); }
-  .field-label { font-size: 13px; color: var(--text2); margin-bottom: 6px; font-weight: 500; }
-  .btn { display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 14px; padding: 15px; font-size: 15px; font-weight: 500; cursor: pointer; border: none; width: 100%; margin-bottom: 10px; font-family: inherit; transition: opacity .1s; }
+  .card-header { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+  .card-subtitle { font-size: 13px; color: var(--text2); }
+  .card-text { font-size: 14px; color: var(--text); margin-top: 8px; }
+  
+  .btn { display: flex; align-items: center; justify-content: center; gap: 8px; border-radius: 14px; padding: 14px; font-size: 15px; font-weight: 500; cursor: pointer; border: none; width: 100%; margin-bottom: 10px; font-family: inherit; transition: opacity .1s; }
   .btn:active { opacity: 0.85; }
   .btn.primary { background: var(--mint); color: white; }
   .btn.secondary { background: var(--card); color: var(--text); border: 0.5px solid var(--border); }
-  .btn.small { padding: 8px 12px; width: auto; margin: 0; font-size: 13px; }
-  .hero { background: linear-gradient(135deg, var(--mint) 0%, #2E9E7A 100%); padding: 20px 20px 28px; color: white; flex-shrink: 0; }
-  .hero h2 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
-  .hero p { font-size: 14px; opacity: 0.85; }
-  .logo-mark { width: 52px; height: 52px; background: white; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
-  .logo-mark i { font-size: 28px; color: var(--mint); }
-  .info-row { display: flex; gap: 10px; flex-wrap: wrap; }
-  .info-card { background: var(--card); border-radius: 12px; padding: 12px 14px; border: 0.5px solid var(--border); flex: 1; min-width: 80px; text-align: center; }
-  .info-card i { font-size: 22px; color: var(--mint); display: block; margin-bottom: 4px; }
-  .info-card .val { font-size: 20px; font-weight: 500; color: var(--text); }
-  .info-card .lbl { font-size: 11px; color: var(--text3); }
-  .chip-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 16px; flex-wrap: wrap; }
-  .chip { padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; cursor: pointer; border: 1.5px solid var(--border); background: var(--card); color: var(--text2); flex-shrink: 0; }
-  .chip.active { background: var(--mint); color: white; border-color: var(--mint); }
-  .event-item { background: var(--card); border-left: 4px solid var(--mint); border-radius: 12px; padding: 12px; margin-bottom: 12px; }
-  .event-time { font-size: 11px; color: var(--text3); }
-  .event-title { font-size: 14px; font-weight: 500; color: var(--text); }
-  .event-desc { font-size: 12px; color: var(--text2); margin-top: 4px; }
+  
+  .form-group { margin-bottom: 14px; }
+  .form-label { font-size: 13px; font-weight: 500; color: var(--text2); margin-bottom: 6px; display: block; }
+  .form-input { width: 100%; padding: 12px 14px; border: 0.5px solid var(--border); border-radius: 12px; font-size: 15px; font-family: inherit; background: var(--card); }
+  .form-input:focus { outline: none; border-color: var(--mint); }
+  
+  .logo { width: 60px; height: 60px; background: white; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+  .logo i { font-size: 32px; color: var(--mint); }
+  
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .stat-card { background: var(--card); border-radius: 12px; padding: 12px; text-align: center; border: 0.5px solid var(--border); }
+  .stat-num { font-size: 24px; font-weight: 600; color: var(--mint); }
+  .stat-label { font-size: 11px; color: var(--text3); margin-top: 4px; }
+  
+  .child-card { background: linear-gradient(135deg, var(--blue) 0%, #3A82D4 100%); border-radius: var(--radius); padding: 16px; color: white; margin-bottom: 12px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+  .child-info h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+  .child-info p { font-size: 13px; opacity: 0.9; }
+  
+  .event-item { background: var(--card); border-left: 4px solid var(--mint); border-radius: 12px; padding: 12px; margin-bottom: 10px; }
+  .event-date { font-size: 12px; color: var(--text3); }
+  .event-title { font-size: 14px; font-weight: 500; color: var(--text); margin: 4px 0; }
+  
   .message-item { display: flex; gap: 10px; margin-bottom: 12px; }
-  .message-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--blue-l); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: var(--blue); flex-shrink: 0; }
-  .message-bubble { background: var(--blue-l); border-radius: 12px; padding: 10px 12px; flex: 1; }
-  .message-time { font-size: 11px; color: var(--text3); }
-  .message-text { font-size: 14px; color: var(--text); margin: 4px 0 0; }
-  .message-item.own { flex-direction: row-reverse; }
-  .message-item.own .message-avatar { background: var(--mint-l); color: var(--mint-d); }
-  .message-item.own .message-bubble { background: var(--mint-l); }
-  .tag { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; }
-  .tag.mint { background: var(--mint-l); color: var(--mint-d); }
-  .tag.coral { background: var(--coral-l); color: var(--coral); }
-  .profile-header { display: flex; gap: 16px; margin-bottom: 20px; }
-  .profile-avatar { width: 80px; height: 80px; border-radius: 16px; background: var(--blue-l); display: flex; align-items: center; justify-content: center; font-size: 32px; flex-shrink: 0; }
-  .profile-info h3 { font-size: 18px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
-  .profile-info p { font-size: 13px; color: var(--text2); margin-bottom: 8px; }
-  .stat-row { display: flex; gap: 8px; margin-bottom: 12px; }
-  .stat { flex: 1; background: var(--blue-l); border-radius: 12px; padding: 12px; text-align: center; }
-  .stat i { font-size: 18px; color: var(--blue); }
-  .stat .val { font-size: 16px; font-weight: 500; color: var(--text); margin-top: 4px; }
-  .stat .lbl { font-size: 11px; color: var(--text2); }
-  .delete-btn { color: var(--coral); cursor: pointer; font-size: 18px; }
-  textarea { resize: none; height: 90px; font-family: inherit; }
-  .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
-  .photo-item { aspect-ratio: 1; border-radius: 12px; background: var(--blue-l); display: flex; align-items: center; justify-content: center; font-size: 32px; position: relative; }
-  .photo-delete { position: absolute; top: 4px; right: 4px; background: var(--coral); color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; }
-  .section-title { font-size: 16px; font-weight: 600; color: var(--text); margin: 20px 0 12px; }
-  .input-group { position: relative; display: flex; }
-  .input-group input { flex: 1; border-radius: 12px 0 0 12px; margin-bottom: 0; }
-  .input-group button { border-radius: 0 12px 12px 0; padding: 14px 12px; margin: 0; }
+  .msg-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--mint-l); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: var(--mint); flex-shrink: 0; }
+  .msg-bubble { background: var(--card); border-radius: 12px; padding: 10px 12px; flex: 1; border: 0.5px solid var(--border); }
+  .msg-name { font-size: 12px; font-weight: 600; color: var(--text); }
+  .msg-text { font-size: 13px; color: var(--text2); margin-top: 2px; }
+  .msg-time { font-size: 11px; color: var(--text3); margin-top: 2px; }
+  
+  .portfolio-item { background: var(--card); border-radius: 12px; padding: 12px; margin-bottom: 10px; display: flex; gap: 10px; }
+  .port-emoji { font-size: 28px; }
+  .port-content { flex: 1; }
+  .port-title { font-size: 14px; font-weight: 500; color: var(--text); }
+  .port-desc { font-size: 12px; color: var(--text3); margin-top: 2px; }
+  .port-tag { display: inline-block; background: var(--mint-l); color: var(--mint); font-size: 10px; padding: 2px 6px; border-radius: 8px; margin-top: 4px; }
+  
+  .input-row { display: flex; gap: 8px; }
+  .input-row input { flex: 1; }
+  .input-row button { padding: 12px; }
+  
+  .portfolio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .port-card { background: var(--blue-l); border-radius: 12px; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 32px; cursor: pointer; position: relative; }
+  .port-card.selected { background: var(--mint); }
+  .port-delete { position: absolute; top: -8px; right: -8px; width: 20px; height: 20px; background: var(--coral); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; }
+  
+  .chip-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .chip { padding: 8px 12px; border-radius: 20px; border: 1px solid var(--border); background: var(--card); cursor: pointer; font-size: 13px; }
+  .chip.active { background: var(--mint); color: white; border-color: var(--mint); }
+  
+  .absence-tag { display: inline-block; background: var(--coral-l); color: var(--coral); font-size: 11px; padding: 4px 8px; border-radius: 6px; margin-top: 4px; }
 </style>
 </head>
 <body>
-<div class="phone" id="app">
 
-  <!-- LOGIN -->
-  <div class="screen active" id="s-login">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="scroll" style="justify-content:center; display:flex; flex-direction:column;">
-      <div style="text-align:center; margin-bottom:32px;">
-        <div class="logo-mark" style="margin:0 auto 16px;"><i class="ti ti-plant-2"></i></div>
-        <h1 style="font-size:28px; font-weight:500; color:var(--text); margin-bottom:8px;">KitaKompass</h1>
-        <p style="font-size:14px; color:var(--text2);">Verwaltungssystem für Kindergärten</p>
-        <p style="font-size:12px; color:var(--text3); margin-top:12px;">Phase 1-3 (localStorage ready)</p>
-      </div>
-      <div style="margin-bottom:8px;"><div class="field-label">Name</div><input class="field" id="login-name" placeholder="Dein Name"></div>
-      <div style="margin-bottom:20px;"><div class="field-label">Rolle</div>
-        <select class="field" id="login-role">
-          <option value="educator">Erzieher/in</option>
-          <option value="parent">Eltern</option>
-        </select>
-      </div>
-      <button class="btn primary" onclick="app.login()"><i class="ti ti-login"></i> Anmelden</button>
-      <div style="display:flex; align-items:center; gap:10px; padding:14px; background:var(--yellow-l); border-radius:12px; margin-top:16px;">
-        <i class="ti ti-bulb" style="color:#F5A200; font-size:22px;"></i>
-        <p style="font-size:12px; color:#7A5800;">Demo-Modus: Alle Daten lokal + Backend-ready</p>
+<div class="phone">
+
+  <!-- LOGIN SCREEN -->
+  <div class="screen active" id="login-screen">
+    <div class="status"><span>9:41</span><span>●●●●●</span></div>
+    <div class="content" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+      <div class="logo"><i class="ti ti-plant-2"></i></div>
+      <h1 style="font-size: 28px; font-weight: 600; color: var(--text); margin-bottom: 8px;">KitaKompass</h1>
+      <p style="font-size: 14px; color: var(--text2); margin-bottom: 32px;">Kindergarten Management System</p>
+      
+      <div style="width: 100%; max-width: 300px;">
+        <div class="form-group">
+          <label class="form-label">Dein Name</label>
+          <input class="form-input" id="login-name" placeholder="z.B. Anna Schmidt" />
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Rolle</label>
+          <select class="form-input" id="login-role">
+            <option value="">-- Wähle Rolle --</option>
+            <option value="educator">👩‍🏫 Erzieher/in</option>
+            <option value="parent">👨‍👩‍👧 Eltern</option>
+          </select>
+        </div>
+        
+        <button class="btn primary" onclick="app.login()" style="margin-bottom: 20px;"><i class="ti ti-login"></i> Anmelden</button>
+        
+        <p style="font-size: 12px; color: var(--text3);">📝 Demo: Wähle Role + klick Anmelden</p>
       </div>
     </div>
   </div>
 
-  <!-- DASHBOARD ERZIEHER -->
-  <div class="screen" id="s-educator-home">
-    <div class="status" style="background:var(--mint); color:rgba(255,255,255,0.85);"><span>9:41</span><span>●●●</span></div>
-    <div class="hero">
-      <p style="font-size:13px; opacity:.8; margin-bottom:4px;">Willkommen 👋</p>
-      <h2 id="educator-name">Hallo Erzieher!</h2>
+  <!-- HOME SCREEN -->
+  <div class="screen" id="home-screen">
+    <div class="status"><span>9:41</span><span>●●●●●</span></div>
+    <div class="header">
+      <span id="header-name">Willkommen</span>
+      <div style="width: 24px;"></div>
     </div>
-    <div class="scroll" style="margin-top:-16px;">
-      <div class="info-row" style="margin-bottom:16px;">
-        <div class="info-card"><i class="ti ti-users"></i><div class="val" id="e-children-count">0</div><div class="lbl">Kinder</div></div>
-        <div class="info-card"><i class="ti ti-calendar"></i><div class="val" id="e-events-count">0</div><div class="lbl">Termine</div></div>
-        <div class="info-card"><i class="ti ti-message"></i><div class="val" id="e-msgs-count">0</div><div class="lbl">Nachrichten</div></div>
+    <div class="content">
+      <div id="educator-dashboard" style="display: none;">
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-num" id="stat-children">0</div>
+            <div class="stat-label">Kinder</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" id="stat-events">0</div>
+            <div class="stat-label">Termine</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num" id="stat-messages">0</div>
+            <div class="stat-label">Chat</div>
+          </div>
+        </div>
+        
+        <button class="btn primary" onclick="app.screen('children')"><i class="ti ti-users"></i> Kinderprofile</button>
+        <button class="btn primary" onclick="app.screen('calendar')"><i class="ti ti-calendar"></i> Kalender</button>
+        <button class="btn primary" onclick="app.screen('portfolio')"><i class="ti ti-photo-album"></i> Portfolio</button>
+        <button class="btn primary" onclick="app.screen('dayinfo')"><i class="ti ti-clipboard-text"></i> Tagesrückblick</button>
+        <button class="btn primary" onclick="app.screen('messages')"><i class="ti ti-message"></i> Nachrichten</button>
       </div>
-      <button class="btn primary" onclick="app.go('s-children')"><i class="ti ti-users"></i> Kinderprofile</button>
-      <button class="btn primary" onclick="app.go('s-calendar')"><i class="ti ti-calendar"></i> Kalender</button>
-      <button class="btn primary" onclick="app.go('s-portfolio')"><i class="ti ti-photo-album"></i> Portfolio</button>
-      <button class="btn primary" onclick="app.go('s-dayinfo')"><i class="ti ti-clipboard-text"></i> Tagesrückblick</button>
-      <button class="btn primary" onclick="app.go('s-messages')"><i class="ti ti-message"></i> Nachrichten</button>
-      <button class="btn primary" onclick="app.go('s-reports')"><i class="ti ti-chart-bar"></i> Berichte</button>
+      
+      <div id="parent-dashboard" style="display: none;">
+        <button class="btn primary" onclick="app.screen('my-child')"><i class="ti ti-heart"></i> Mein Kind</button>
+        <button class="btn primary" onclick="app.screen('calendar')"><i class="ti ti-calendar"></i> Kalender</button>
+        <button class="btn primary" onclick="app.screen('portfolio')"><i class="ti ti-photo-album"></i> Portfolio</button>
+        <button class="btn primary" onclick="app.screen('dayinfo')"><i class="ti ti-clipboard-text"></i> Tagesberichte</button>
+        <button class="btn primary" onclick="app.screen('messages')"><i class="ti ti-message"></i> Nachrichten</button>
+        <button class="btn primary" onclick="app.screen('absence')"><i class="ti ti-user-x"></i> Abwesenheit melden</button>
+      </div>
     </div>
     <div class="bottom-nav">
-      <div class="nav-item active" onclick="app.go('s-educator-home')"><i class="ti ti-home"></i><span>Start</span></div>
-      <div class="nav-item" onclick="app.go('s-calendar')"><i class="ti ti-calendar"></i><span>Kalender</span></div>
-      <div class="nav-item" onclick="app.go('s-messages')"><i class="ti ti-message"></i><span>Chat</span><div class="badge-dot" id="msg-badge" style="display:none;"></div></div>
-      <div class="nav-item" onclick="app.logout()"><i class="ti ti-logout"></i><span>Logout</span></div>
+      <button class="nav-btn active" onclick="app.screen('home')"><i class="ti ti-home"></i><span>Start</span></button>
+      <button class="nav-btn" onclick="app.screen('calendar')"><i class="ti ti-calendar"></i><span>Kalender</span></button>
+      <button class="nav-btn" onclick="app.screen('messages')"><i class="ti ti-message"></i><span>Chat</span></button>
+      <button class="nav-btn" onclick="app.logout()" style="color: var(--coral);"><i class="ti ti-logout"></i><span>Logout</span></button>
     </div>
   </div>
 
-  <!-- DASHBOARD ELTERN -->
-  <div class="screen" id="s-parent-home">
-    <div class="status" style="background:var(--mint); color:rgba(255,255,255,0.85);"><span>9:41</span><span>●●●</span></div>
-    <div class="hero">
-      <p style="font-size:13px; opacity:.8; margin-bottom:4px;">Willkommen 👋</p>
-      <h2 id="parent-name">Hallo!</h2>
+  <!-- CHILDREN SCREEN -->
+  <div class="screen" id="children-screen">
+    <div class="status"><span>9:41</span><span>●●●●●</span></div>
+    <div class="header">
+      <button class="header-back" onclick="app.screen('home')"><i class="ti ti-arrow-left"></i></button>
+      <span class="header-title">Kinderprofile</span>
+      <button class="header-back" onclick="app.screen('add-child')" style="background: rgba(255,255,255,0.2);"><i class="ti ti-plus"></i></button>
     </div>
-    <div class="scroll" style="margin-top:-16px;">
-      <button class="btn primary" onclick="app.go('s-child-view')"><i class="ti ti-heart"></i> Mein Kind</button>
-      <button class="btn primary" onclick="app.go('s-calendar')"><i class="ti ti-calendar"></i> Kalender</button>
-      <button class="btn primary" onclick="app.go('s-parent-portfolio')"><i class="ti ti-photo-album"></i> Portfolio</button>
-      <button class="btn primary" onclick="app.go('s-day-reports')"><i class="ti ti-clipboard-text"></i> Tagesberichte</button>
-      <button class="btn primary" onclick="app.go('s-messages')"><i class="ti ti-message"></i> Nachrichten</button>
-      <button class="btn primary" onclick="app.go('s-absence')"><i class="ti ti-user-x"></i> Abwesenheit</button>
-    </div>
-    <div class="bottom-nav">
-      <div class="nav-item active" onclick="app.go('s-parent-home')"><i class="ti ti-home"></i><span>Start</span></div>
-      <div class="nav-item" onclick="app.go('s-calendar')"><i class="ti ti-calendar"></i><span>Kalender</span></div>
-      <div class="nav-item" onclick="app.go('s-messages')"><i class="ti ti-message"></i><span>Chat</span><div class="badge-dot" id="msg-badge-p" style="display:none;"></div></div>
-      <div class="nav-item" onclick="app.logout()"><i class="ti ti-logout"></i><span>Logout</span></div>
-    </div>
+    <div class="content" id="children-list"></div>
   </div>
 
-  <!-- KINDERPROFILE (ERZIEHER) -->
-  <div class="screen" id="s-children">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="app.go(app.user.role==='educator'?'s-educator-home':'s-parent-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Kinderprofile</span></div>
-    <div class="scroll" id="children-list" style="padding-top:12px;"></div>
-    <div style="padding: 16px 20px; background: var(--card); border-top: 0.5px solid var(--border); display:none;" id="add-child-footer">
-      <button class="btn primary" onclick="app.go('s-add-child')"><i class="ti ti-plus"></i> Kind hinzufügen</button>
+  <!-- ADD CHILD SCREEN -->
+  <div class="screen" id="add-child-screen">
+    <div class="status"><span>9:41</span><span>●●●●●</span></div>
+    <div class="header">
+      <button class="header-back" onclick="app.screen('children')"><i class="ti ti-arrow-left"></i></button>
+      <span class="header-title">Kind hinzufügen</span>
+      <div style="width: 36px;"></div>
     </div>
-  </div>
-
-  <!-- KIND HINZUFÜGEN -->
-  <div class="screen" id="s-add-child">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="app.go('s-children')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Kind hinzufügen</span></div>
-    <div class="scroll">
-      <div class="field-label">Foto (Emoji)</div>
-      <input class="field" id="child-emoji" placeholder="z.B. 👧 oder 👦" maxlength="2">
-      <div class="field-label">Name</div>
-      <input class="field" id="child-name" placeholder="z.B. Ben Müller">
-      <div class="field-label">Geburtsdatum</div>
-      <input class="field" id="child-birth" type="date">
-      <div class="field-label">Gruppe</div>
-      <input class="field" id="child-group" placeholder="z.B. Sonnenhase">
-      <div class="field-label">Allergien</div>
-      <textarea class="field" id="child-allergies" placeholder="z.B. Nussallergie, Laktose..."></textarea>
-      <div class="field-label">Elternkontakt</div>
-      <input class="field" id="child-contact" placeholder="+49 123 456789">
+    <div class="content">
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input class="form-input" id="child-name" placeholder="z.B. Ben Müller" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Alter</label>
+        <input class="form-input" id="child-age" type="number" placeholder="z.B. 4" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Gruppe</label>
+        <input class="form-input" id="child-group" placeholder="z.B. Sonnenhase" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Allergien</label>
+        <input class="form-input" id="child-allergies" placeholder="z.B. Nussallergie" />
+      </div>
       <button class="btn primary" onclick="app.addChild()"><i class="ti ti-check"></i> Speichern</button>
     </div>
   </div>
 
-  <!-- KIND DETAIL (ERZIEHER) -->
-  <div class="screen" id="s-child-detail">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="app.go('s-children')"><i class="ti ti-arrow-left"></i></div><span class="nav-title" id="detail-name">Kind</span></div>
-    <div class="scroll">
-      <div class="profile-header">
-        <div class="profile-avatar" id="detail-emoji">👧</div>
-        <div class="profile-info">
-          <h3 id="detail-fullname">Name</h3>
-          <p id="detail-group">Gruppe</p>
-          <p id="detail-age">Alter</p>
-        </div>
+  <!-- CALENDAR SCREEN -->
+  <div class="screen" id="calendar-screen">
+    <div class="status"><span>9:41</span><span>●●●●●</span></div>
+    <div class="header">
+      <button class="header-back" onclick="app.screen('home')"><i class="ti ti-arrow-left"></i></button>
+      <span class="header-title">Kalender</span>
+      <button class="header-back" id="cal-add-btn" onclick="app.screen('add-event')" style="background: rgba(255,255,255,0.2); display: none;"><i class="ti ti-plus"></i></button>
+    </div>
+    <div class="content" id="events-list"></div>
+  </div>
+
+  <!-- ADD EVENT SCREEN -->
+  <div class="screen" id="add-event-screen">
+    <div class="status"><span>9:41</span><span>●●●●●</span></div>
+    <div class="header">
+      <button class="header-back" onclick="app.screen('calendar')"><i class="ti ti-arrow-left"></i></button>
+      <span class="header-title">Neuer Termin</span>
+      <div style="width: 36px;"></div>
+    </div>
+    <div class="content">
+      <div class="form-group">
+        <label class="form-label">Titel</label>
+        <input class="form-input" id="event-title" placeholder="z.B. Sommerfest" />
       </div>
-      <div class="section-title">Informationen</div>
-      <div class="card">
-        <div style="font-size:13px; color:var(--text2); margin-bottom:8px;"><strong>Allergien:</strong></div>
-        <p id="detail-allergies" style="font-size:14px; color:var(--text);">-</p>
-        <div style="font-size:13px; color:var(--text2); margin:12px 0 8px;"><strong>Kontakt:</strong></div>
-        <p id="detail-contact" style="font-size:14px; color:var(--text);">-</p>
+      <div class="form-group">
+        <label class="form-label">Datum</label>
+        <input class="form-input" id="event-date" type="date" />
       </div>
-      <button class="btn secondary" onclick="app.deleteChild(app.currentChildId)"><i class="ti ti-trash"></i> Löschen</button>
-    </div>
-  </div>
-
-  <!-- KIND ANSICHT (ELTERN) -->
-  <div class="screen" id="s-child-view">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="app.go('s-parent-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Mein Kind</span></div>
-    <div class="scroll" id="parent-child-view"></div>
-  </div>
-
-  <!-- KALENDER -->
-  <div class="screen" id="s-calendar">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="app.go(app.user.role==='educator'?'s-educator-home':'s-parent-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Kalender</span>
-      <button class="btn primary small" id="add-event-btn" onclick="app.go('s-add-event')" style="display:none;"><i class="ti ti-plus"></i></button>
-    </div>
-    <div class="scroll">
-      <div id="events-list"></div>
-    </div>
-  </div>
-
-  <!-- EVENT ERSTELLEN -->
-  <div class="screen" id="s-add-event">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="app.go('s-calendar')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Neuer Termin</span></div>
-    <div class="scroll">
-      <div class="field-label">Titel</div>
-      <input class="field" id="event-title" placeholder="z.B. Sommerfest">
-      <div class="field-label">Datum</div>
-      <input class="field" id="event-date" type="date">
-      <div class="field-label">Zeit</div>
-      <input class="field" id="event-time" type="time">
-      <div class="field-label">Kategorie</div>
-      <select class="field" id="event-category">
-        <option value="event">Veranstaltung</option>
-        <option value="holiday">Feiertag</option>
-        <option value="meeting">Elternabend</option>
-        <option value="other">Sonstiges</option>
-      </select>
-      <div class="field-label">Beschreibung</div>
-      <textarea class="field" id="event-desc" placeholder="Details..."></textarea>
+      <div class="form-group">
+        <label class="form-label">Uhrzeit</label>
+        <input class="form-input" id="event-time" type="time" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Beschreibung</label>
+        <textarea class="form-input" id="event-desc" placeholder="Details..." style="height: 80px; resize: none;"></textarea>
+      </div>
       <button class="btn primary" onclick="app.addEvent()"><i class="ti ti-check"></i> Speichern</button>
     </div>
   </div>
 
-  <!-- PORTFOLIO (ERZIEHER) -->
-  <div class="screen" id="s-portfolio">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="app.go('s-educator-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Portfolio</span>
-      <button class="btn primary small" onclick="app.go('s-add-portfolio')"><i class="ti ti-plus"></i></button>
+  <!-- PORTFOLIO SCREEN -->
+  <div class="screen" id="portfolio-screen">
+    <div class="status"><span>9:41</span><span>●●●●●</span></div>
+    <div class="header">
+      <button class="header-back" onclick="app.screen('home')"><i class="ti ti-arrow-left"></i></button>
+      <span class="header-title">Portfolio</span>
+      <button class="header-back" id="port-add-btn" onclick="app.screen('add-portfolio')" style="background: rgba(255,255,255,0.2); display: none;"><i class="ti ti-plus"></i></button>
     </div>
-    <div class="scroll" id="portfolio-list"></div>
+    <div class="content" id="portfolio-list"></div>
   </div>
 
-  <!-- PORTFOLIO (ELTERN) -->
-  <div class="screen" id="s-parent-portfolio">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="app.go('s-parent-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Portfolio</span></div>
-    <div class="scroll" id="parent-portfolio-list"></div>
-  </div>
-
-  <!-- PORTFOLIO EINTRAG ERSTELLEN -->
-  <div class="screen" id="s-add-portfolio">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="app.go('s-portfolio')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Neuer Eintrag</span></div>
-    <div class="scroll">
-      <div class="field-label">Kind</div>
-      <select class="field" id="portfolio-child"></select>
-      <div class="field-label">Foto (Emoji)</div>
-      <input class="field" id="portfolio-emoji" placeholder="z.B. 🎨 📚 🏃" maxlength="2">
-      <div class="field-label">Titel</div>
-      <input class="field" id="portfolio-title" placeholder="z.B. Kunstprojekt">
-      <div class="field-label">Beschreibung</div>
-      <textarea class="field" id="portfolio-desc" placeholder="Was hat das Kind gemacht?"></textarea>
-      <div class="field-label">Kategorie</div>
-      <div class="chip-row" id="portfolio-chips">
-        <span class="chip active" data-cat="sprache">Sprache</span>
-        <span class="chip" data-cat="motorik">Motorik</span>
-        <span class="chip" data-cat="sozial">Sozial</span>
-        <span class="chip" data-cat="kreativ">Kreativ</span>
-        <span class="chip" data-cat="kognitiv">Kognitiv</span>
+  <!-- ADD PORTFOLIO SCREEN -->
+  <div class="screen" id="add-portfolio-screen">
+    <div class="status"><span>9:41</span><span>●●●●●</span></div>
+    <div class="header">
+      <button class="header-back" onclick="app.screen('portfolio')"><i class="ti ti-arrow-left"></i></button>
+      <span class="header-title">Portfolio Eintrag</span>
+      <div style="width: 36px;"></div>
+    </div>
+    <div class="content">
+      <div class="form-group">
+        <label class="form-label">Kind</label>
+        <select class="form-input" id="portfolio-child"></select>
       </div>
-      <input type="hidden" id="portfolio-category" value="sprache">
+      <div class="form-group">
+        <label class="form-label">Titel</label>
+        <input class="form-input" id="portfolio-title" placeholder="z.B. Kunstwerk" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Beschreibung</label>
+        <textarea class="form-input" id="portfolio-desc" placeholder="Was hat das Kind gemacht?" style="height: 80px; resize: none;"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Kategorie</label>
+        <div class="chip-row">
+          <span class="chip active" data-cat="sprache">Sprache</span>
+          <span class="chip" data-cat="motorik">Motorik</span>
+          <span class="chip" data-cat="sozial">Sozial</span>
+          <span class="chip" data-cat="kreativ">Kreativ</span>
+        </div>
+      </div>
+      <input type="hidden" id="portfolio-category" value="sprache" />
       <button class="btn primary" onclick="app.addPortfolio()"><i class="ti ti-check"></i> Speichern</button>
     </div>
   </div>
 
-  <!-- TAGESRÜCKBLICK (ERZIEHER) -->
-  <div class="screen" id="s-dayinfo">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="app.go('s-educator-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Tagesrückblick</span></div>
-    <div class="scroll">
-      <div class="field-label">Gruppe</div>
-      <select class="field" id="dayinfo-group"></select>
-      <div class="field-label">Stimmung</div>
-      <div class="chip-row" id="dayinfo-chips">
-        <span class="chip" data-mood="sad">😢</span>
-        <span class="chip" data-mood="neutral">😐</span>
-        <span class="chip active" data-mood="happy">😊</span>
-        <span class="chip" data-mood="very-happy">🤩</span>
+  <!-- DAY INFO SCREEN (EDUCATOR) -->
+  <div class="screen" id="dayinfo-screen">
+    <div class="status"><span>9:41</span><span>●●●●●</span></div>
+    <div class="header">
+      <button class="header-back" onclick="app.screen('home')"><i class="ti ti-arrow-left"></i></button>
+      <span class="header-title">Tagesrückblick</span>
+      <div style="width: 36px;"></div>
+    </div>
+    <div class="content">
+      <div class="form-group">
+        <label class="form-label">Gruppe</label>
+        <select class="form-input" id="dayinfo-group"></select>
       </div>
-      <input type="hidden" id="dayinfo-mood" value="happy">
-      <div class="field-label">Aktivitäten</div>
-      <textarea class="field" id="dayinfo-activities" placeholder="Was haben die Kinder gemacht?"></textarea>
-      <div class="field-label">Besonderheiten</div>
-      <textarea class="field" id="dayinfo-notes" placeholder="Wichtiges für Eltern..."></textarea>
+      <div class="form-group">
+        <label class="form-label">Aktivitäten</label>
+        <textarea class="form-input" id="dayinfo-activities" placeholder="Was haben die Kinder heute gemacht?" style="height: 100px; resize: none;"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Besonderheiten</label>
+        <textarea class="form-input" id="dayinfo-notes" placeholder="Wichtiges..." style="height: 80px; resize: none;"></textarea>
+      </div>
       <button class="btn primary" onclick="app.saveDayInfo()"><i class="ti ti-check"></i> Speichern</button>
     </div>
   </div>
 
-  <!-- TAGESBERICHTE (ELTERN) -->
-  <div class="screen" id="s-day-reports">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="app.go('s-parent-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Tagesberichte</span></div>
-    <div class="scroll" id="parent-dayreports-list"></div>
+  <!-- MESSAGES SCREEN -->
+  <div class="screen" id="messages-screen">
+    <div class="status"><span>9:41</span><span>●●●●●</span></div>
+    <div class="header">
+      <button class="header-back" onclick="app.screen('home')"><i class="ti ti-arrow-left"></i></button>
+      <span class="header-title">Nachrichten</span>
+      <div style="width: 36px;"></div>
+    </div>
+    <div class="content" id="messages-list" style="margin-bottom: 60px;"></div>
+    <div style="position: absolute; bottom: 68px; left: 0; right: 0; padding: 12px 20px; background: var(--card); border-top: 0.5px solid var(--border);">
+      <div class="input-row">
+        <input class="form-input" id="msg-input" placeholder="Nachricht..." style="margin-bottom: 0;" />
+        <button class="btn primary" onclick="app.sendMessage()" style="width: auto; margin: 0; padding: 12px;"><i class="ti ti-send"></i></button>
+      </div>
+    </div>
   </div>
 
-  <!-- ABWESENHEIT (ELTERN) -->
-  <div class="screen" id="s-absence">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="app.go('s-parent-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Abwesenheit melden</span></div>
-    <div class="scroll">
-      <div class="field-label">Grund</div>
-      <div class="chip-row" id="absence-chips">
-        <span class="chip active" data-reason="sick">🤧 Krank</span>
-        <span class="chip" data-reason="vacation">🏖️ Urlaub</span>
-        <span class="chip" data-reason="doctor">🏥 Arzt</span>
-        <span class="chip" data-reason="other">Sonstiges</span>
+  <!-- MY CHILD SCREEN (PARENTS) -->
+  <div class="screen" id="my-child-screen">
+    <div class="status"><span>9:41</span><span>●●●●●</span></div>
+    <div class="header">
+      <button class="header-back" onclick="app.screen('home')"><i class="ti ti-arrow-left"></i></button>
+      <span class="header-title">Mein Kind</span>
+      <div style="width: 36px;"></div>
+    </div>
+    <div class="content" id="child-detail"></div>
+  </div>
+
+  <!-- ABSENCE SCREEN (PARENTS) -->
+  <div class="screen" id="absence-screen">
+    <div class="status"><span>9:41</span><span>●●●●●</span></div>
+    <div class="header">
+      <button class="header-back" onclick="app.screen('home')"><i class="ti ti-arrow-left"></i></button>
+      <span class="header-title">Abwesenheit</span>
+      <div style="width: 36px;"></div>
+    </div>
+    <div class="content">
+      <div class="form-group">
+        <label class="form-label">Grund</label>
+        <select class="form-input" id="absence-reason">
+          <option value="sick">🤧 Krank</option>
+          <option value="vacation">🏖️ Urlaub</option>
+          <option value="doctor">🏥 Arzt</option>
+          <option value="other">Sonstiges</option>
+        </select>
       </div>
-      <input type="hidden" id="absence-reason" value="sick">
-      <div class="field-label">Von</div>
-      <input class="field" id="absence-from" type="date">
-      <div class="field-label">Bis</div>
-      <input class="field" id="absence-to" type="date">
-      <div class="field-label">Notiz</div>
-      <textarea class="field" id="absence-note" placeholder="z.B. Fieber"></textarea>
+      <div class="form-group">
+        <label class="form-label">Von</label>
+        <input class="form-input" id="absence-from" type="date" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Bis</label>
+        <input class="form-input" id="absence-to" type="date" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notiz</label>
+        <textarea class="form-input" id="absence-note" placeholder="z.B. Fieber..." style="height: 80px; resize: none;"></textarea>
+      </div>
       <button class="btn primary" onclick="app.reportAbsence()"><i class="ti ti-check"></i> Melden</button>
-    </div>
-  </div>
-
-  <!-- NACHRICHTEN -->
-  <div class="screen" id="s-messages">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="app.go(app.user.role==='educator'?'s-educator-home':'s-parent-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Nachrichten</span></div>
-    <div class="scroll" id="messages-list"></div>
-    <div style="padding: 12px 20px; background: var(--card); border-top: 0.5px solid var(--border); display:flex; gap:8px;">
-      <input class="field" id="msg-input" placeholder="Nachricht..." style="margin-bottom:0;">
-      <button class="btn primary small" onclick="app.sendMessage()" style="padding:14px 12px; margin:0;"><i class="ti ti-send"></i></button>
-    </div>
-  </div>
-
-  <!-- BERICHTE (ERZIEHER) -->
-  <div class="screen" id="s-reports">
-    <div class="status"><span>9:41</span><span>●●●</span></div>
-    <div class="nav"><div class="back-btn" onclick="app.go('s-educator-home')"><i class="ti ti-arrow-left"></i></div><span class="nav-title">Statistiken & Berichte</span></div>
-    <div class="scroll">
-      <div class="section-title">Überblick</div>
-      <div class="stat-row">
-        <div class="stat">
-          <i class="ti ti-users"></i>
-          <div class="val" id="report-children">0</div>
-          <div class="lbl">Kinder</div>
-        </div>
-        <div class="stat">
-          <i class="ti ti-photo-album"></i>
-          <div class="val" id="report-portfolio">0</div>
-          <div class="lbl">Portfolio</div>
-        </div>
-      </div>
-      <div class="stat-row">
-        <div class="stat">
-          <i class="ti ti-message"></i>
-          <div class="val" id="report-messages">0</div>
-          <div class="lbl">Nachrichten</div>
-        </div>
-        <div class="stat">
-          <i class="ti ti-calendar"></i>
-          <div class="val" id="report-events">0</div>
-          <div class="lbl">Ereignisse</div>
-        </div>
-      </div>
-      <button class="btn secondary" onclick="alert('Export-Funktion kommt in Phase 2 (Backend-Integration)')"><i class="ti ti-download"></i> Exportieren</button>
     </div>
   </div>
 
@@ -417,315 +392,261 @@
 <script>
 const app = {
   user: null,
-  currentChildId: null,
   data: {
-    children: [],
-    events: [],
-    portfolio: [],
-    dayinfo: [],
+    children: [
+      { id: 1, name: '👧 Emma Schmidt', age: 4, group: 'Sonnenhase', allergies: 'Nussallergie' },
+      { id: 2, name: '👦 Ben Müller', age: 5, group: 'Mondtier', allergies: 'Laktose' },
+      { id: 3, name: '👧 Lisa Fischer', age: 3, group: 'Sonnenhase', allergies: '' }
+    ],
+    events: [
+      { id: 1, title: '☀️ Sommerfest', date: '2026-07-15', time: '14:00', desc: 'Im Hof, ab 14 Uhr' },
+      { id: 2, title: '👨‍👩‍👧 Elternabend', date: '2026-07-20', time: '19:30', desc: 'Aktuelle Themen besprechen' },
+      { id: 3, title: '🌴 Sommerferien Start', date: '2026-07-27', time: '', desc: 'Kita geschlossen' }
+    ],
+    portfolio: [
+      { id: 1, child: 'Emma', emoji: '🎨', title: 'Erstes Kunstwerk', desc: 'Emma hat heute mit Farben experimentiert und ein tolles Bild gemalt!', cat: 'kreativ' },
+      { id: 2, child: 'Ben', emoji: '📚', title: 'Wortschatz erweitert', desc: 'Ben lernt schnell neue Worte und kann schon ganze Sätze sprechen.', cat: 'sprache' },
+      { id: 3, child: 'Lisa', emoji: '🏃', title: 'Klettern am Baum', desc: 'Lisa traut sich immer mehr und klettert sehr gewandt!', cat: 'motorik' }
+    ],
+    messages: [
+      { id: 1, sender: 'Anna', role: 'educator', text: 'Guten Morgen! Emma ist fröhlich angekommen 😊', time: '08:30' },
+      { id: 2, sender: 'Mama Sarah', role: 'parent', text: 'Super! Danke für die Update!', time: '08:35' },
+      { id: 3, sender: 'Anna', role: 'educator', text: 'Wir haben heute im Garten gepflanzt. Emma hat geholfen!', time: '11:00' },
+      { id: 4, sender: 'Mama Sarah', role: 'parent', text: 'Das freut mich zu hören! 🌱', time: '11:15' }
+    ],
     absences: [],
-    messages: [],
-    dayreports: []
-  },
-
-  init() {
-    this.loadData();
-    this.setupEventListeners();
-    this.setDefaultDates();
-  },
-
-  setDefaultDates() {
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('event-date').value = today;
-    document.getElementById('absence-from').value = today;
-    document.getElementById('absence-to').value = today;
-    document.getElementById('child-birth').value = today;
-  },
-
-  setupEventListeners() {
-    const setupChips = (selector, inputId) => {
-      document.querySelectorAll(selector).forEach(chip => {
-        chip.addEventListener('click', function() {
-          const parent = this.parentElement;
-          parent.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-          this.classList.add('active');
-          const attr = this.dataset.cat || this.dataset.mood || this.dataset.reason;
-          document.getElementById(inputId).value = attr;
-        });
-      });
-    };
-    setupChips('#portfolio-chips .chip', 'portfolio-category');
-    setupChips('#dayinfo-chips .chip', 'dayinfo-mood');
-    setupChips('#absence-chips .chip', 'absence-reason');
+    dayinfo: [
+      { group: 'Sonnenhase', activities: 'Morgenkreis, Malen, Spielplatz, Mittagessen', notes: 'Alle Kinder waren sehr aktiv und fröhlich!' }
+    ]
   },
 
   login() {
     const name = document.getElementById('login-name').value.trim();
     const role = document.getElementById('login-role').value;
-    if (!name) { alert('Bitte Namen eingeben'); return; }
+    
+    if (!name) {
+      alert('Bitte Namen eingeben');
+      return;
+    }
+    if (!role) {
+      alert('Bitte Rolle wählen');
+      return;
+    }
+    
     this.user = { name, role };
     this.saveData();
     this.showHome();
   },
 
-  logout() {
-    this.user = null;
-    this.saveData();
-    this.go('s-login');
-  },
-
   showHome() {
+    document.getElementById('header-name').textContent = `👋 Hallo ${this.user.name}!`;
+    
     if (this.user.role === 'educator') {
-      document.getElementById('educator-name').textContent = `Willkommen, ${this.user.name}!`;
-      document.getElementById('e-children-count').textContent = this.data.children.length;
-      document.getElementById('e-events-count').textContent = this.data.events.length;
-      document.getElementById('e-msgs-count').textContent = this.data.messages.length;
-      document.getElementById('add-event-btn').style.display = 'flex';
-      document.getElementById('add-child-footer').style.display = 'block';
-      this.go('s-educator-home');
+      document.getElementById('educator-dashboard').style.display = 'block';
+      document.getElementById('parent-dashboard').style.display = 'none';
+      document.getElementById('cal-add-btn').style.display = 'block';
+      document.getElementById('port-add-btn').style.display = 'block';
+      document.getElementById('stat-children').textContent = this.data.children.length;
+      document.getElementById('stat-events').textContent = this.data.events.length;
+      document.getElementById('stat-messages').textContent = this.data.messages.length;
     } else {
-      document.getElementById('parent-name').textContent = `Willkommen, ${this.user.name}!`;
-      this.go('s-parent-home');
+      document.getElementById('educator-dashboard').style.display = 'none';
+      document.getElementById('parent-dashboard').style.display = 'block';
+      document.getElementById('cal-add-btn').style.display = 'none';
+      document.getElementById('port-add-btn').style.display = 'none';
     }
+    
+    this.screen('home');
   },
 
   addChild() {
-    const emoji = document.getElementById('child-emoji').value || '👧';
     const name = document.getElementById('child-name').value.trim();
-    const birth = document.getElementById('child-birth').value;
+    const age = document.getElementById('child-age').value;
     const group = document.getElementById('child-group').value.trim();
     const allergies = document.getElementById('child-allergies').value.trim();
-    const contact = document.getElementById('child-contact').value.trim();
     
-    if (!name || !group) { alert('Name und Gruppe erforderlich'); return; }
+    if (!name || !age || !group) {
+      alert('Bitte alle Felder ausfüllen');
+      return;
+    }
     
-    const child = {
+    this.data.children.push({
       id: Date.now(),
-      emoji, name, birth, group, allergies, contact,
-      createdAt: new Date().toLocaleDateString('de-DE')
-    };
-    this.data.children.push(child);
+      name: `👧 ${name}`,
+      age,
+      group,
+      allergies
+    });
+    
     this.saveData();
-    this.clearForm('child-');
-    this.go('s-children');
-    this.updateChildrenList();
+    document.getElementById('child-name').value = '';
+    document.getElementById('child-age').value = '';
+    document.getElementById('child-group').value = '';
+    document.getElementById('child-allergies').value = '';
+    
+    this.updateChildren();
+    this.screen('children');
   },
 
-  updateChildrenList() {
+  updateChildren() {
     const list = document.getElementById('children-list');
     list.innerHTML = this.data.children.map(child => `
-      <div class="card card-hover" onclick="app.viewChildDetail(${child.id})">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <div style="display:flex; gap:12px; align-items:center; flex:1;">
-            <div style="font-size:28px;">${child.emoji}</div>
-            <div>
-              <div style="font-size:16px; font-weight:500; color:var(--text);">${child.name}</div>
-              <div style="font-size:13px; color:var(--text2);">${child.group}</div>
-            </div>
-          </div>
-          <i class="ti ti-chevron-right" style="color:var(--text3);"></i>
+      <div class="child-card">
+        <div class="child-info">
+          <h3>${child.name}</h3>
+          <p>${child.group} • ${child.age} Jahre</p>
         </div>
+        <i class="ti ti-chevron-right" style="color: white; opacity: 0.7;"></i>
       </div>
     `).join('');
-  },
-
-  viewChildDetail(id) {
-    this.currentChildId = id;
-    const child = this.data.children.find(c => c.id === id);
-    if (!child) return;
-    
-    document.getElementById('detail-emoji').textContent = child.emoji;
-    document.getElementById('detail-fullname').textContent = child.name;
-    document.getElementById('detail-group').textContent = child.group;
-    const age = this.calculateAge(child.birth);
-    document.getElementById('detail-age').textContent = age + ' Jahre';
-    document.getElementById('detail-allergies').textContent = child.allergies || '-';
-    document.getElementById('detail-contact').textContent = child.contact || '-';
-    
-    this.go('s-child-detail');
-  },
-
-  calculateAge(birthDate) {
-    if (!birthDate) return '-';
-    const today = new Date();
-    const birth = new Date(birthDate);
-    let age = today.getFullYear() - birth.getFullYear();
-    const m = today.getMonth() - birth.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
-    return age;
-  },
-
-  deleteChild(id) {
-    if (!confirm('Kind wirklich löschen?')) return;
-    this.data.children = this.data.children.filter(c => c.id !== id);
-    this.data.portfolio = this.data.portfolio.filter(p => p.childId !== id);
-    this.saveData();
-    this.go('s-children');
-    this.updateChildrenList();
   },
 
   addEvent() {
     const title = document.getElementById('event-title').value.trim();
     const date = document.getElementById('event-date').value;
     const time = document.getElementById('event-time').value;
-    const category = document.getElementById('event-category').value;
     const desc = document.getElementById('event-desc').value.trim();
     
-    if (!title || !date) { alert('Titel und Datum erforderlich'); return; }
+    if (!title || !date) {
+      alert('Titel und Datum erforderlich');
+      return;
+    }
     
     this.data.events.push({
       id: Date.now(),
-      title, date, time, category, desc,
-      createdAt: new Date().toLocaleDateString('de-DE')
+      title,
+      date,
+      time,
+      desc
     });
+    
     this.saveData();
-    this.clearForm('event-');
-    this.updateCalendar();
-    this.go('s-calendar');
+    document.getElementById('event-title').value = '';
+    document.getElementById('event-date').value = '';
+    document.getElementById('event-time').value = '';
+    document.getElementById('event-desc').value = '';
+    
+    this.updateEvents();
+    this.screen('calendar');
   },
 
-  updateCalendar() {
+  updateEvents() {
     const list = document.getElementById('events-list');
     const sorted = [...this.data.events].sort((a, b) => new Date(a.date) - new Date(b.date));
-    list.innerHTML = sorted.length === 0 ? '<p style="text-align:center; color:var(--text3); margin:20px 0;">Keine Termine</p>' :
-      sorted.map(event => `
+    
+    list.innerHTML = sorted.map(event => `
       <div class="event-item">
-        <div style="display:flex; justify-content:space-between; gap:10px;">
-          <div style="flex:1;">
-            <div class="event-time">${new Date(event.date).toLocaleDateString('de-DE')} ${event.time || ''}</div>
-            <div class="event-title">${event.title}</div>
-            <span class="tag mint" style="margin-top:6px;">${event.category}</span>
-            ${event.desc ? `<div class="event-desc" style="margin-top:6px;">${event.desc}</div>` : ''}
-          </div>
-          ${app.user.role === 'educator' ? `<span class="delete-btn" onclick="app.deleteEvent(${event.id})">✕</span>` : ''}
-        </div>
+        <div class="event-date">${new Date(event.date).toLocaleDateString('de-DE')} ${event.time || ''}</div>
+        <div class="event-title">${event.title}</div>
+        ${event.desc ? `<div style="font-size: 12px; color: var(--text3); margin-top: 4px;">${event.desc}</div>` : ''}
       </div>
     `).join('');
   },
 
-  deleteEvent(id) {
-    this.data.events = this.data.events.filter(e => e.id !== id);
-    this.saveData();
-    this.updateCalendar();
-  },
-
   addPortfolio() {
-    const childId = document.getElementById('portfolio-child').value;
-    const emoji = document.getElementById('portfolio-emoji').value || '📸';
+    const child = document.getElementById('portfolio-child').value;
     const title = document.getElementById('portfolio-title').value.trim();
     const desc = document.getElementById('portfolio-desc').value.trim();
     const category = document.getElementById('portfolio-category').value;
     
-    if (!childId || !title || !desc) { alert('Alle Felder erforderlich'); return; }
+    if (!child || !title || !desc) {
+      alert('Alle Felder erforderlich');
+      return;
+    }
     
     this.data.portfolio.push({
       id: Date.now(),
-      childId: parseInt(childId),
-      emoji, title, desc, category,
-      createdAt: new Date().toLocaleDateString('de-DE')
+      child,
+      emoji: '📸',
+      title,
+      desc,
+      cat: category
     });
-    this.saveData();
-    this.clearForm('portfolio-');
-    this.updatePortfolioList();
-    this.updateParentPortfolioList();
-    this.go('s-portfolio');
-  },
-
-  updatePortfolioList() {
-    const list = document.getElementById('portfolio-list');
-    const childSelect = document.getElementById('portfolio-child');
-    childSelect.innerHTML = '<option value="">-- Kind wählen --</option>' + 
-      this.data.children.map(c => `<option value="${c.id}">${c.emoji} ${c.name}</option>`).join('');
     
-    list.innerHTML = this.data.portfolio.length === 0 ? '<p style="text-align:center; color:var(--text3); margin:20px 0;">Keine Einträge</p>' :
-      this.data.portfolio.map(entry => {
-      const child = this.data.children.find(c => c.id === entry.childId);
-      return `
-        <div class="card">
-          <div style="display:flex; gap:12px; margin-bottom:8px;">
-            <div style="font-size:28px;">${entry.emoji}</div>
-            <div style="flex:1;">
-              <div style="font-size:13px; color:var(--text2);">${child?.name}</div>
-              <div style="font-size:16px; font-weight:500; color:var(--text);">${entry.title}</div>
-            </div>
-            <span class="delete-btn" onclick="app.deletePortfolio(${entry.id})">✕</span>
-          </div>
-          <div style="font-size:13px; color:var(--text3); margin-bottom:8px;">${entry.desc}</div>
-          <span class="tag mint">${entry.category}</span>
-        </div>
-      `;
-    }).join('');
-  },
-
-  updateParentPortfolioList() {
-    const list = document.getElementById('parent-portfolio-list');
-    list.innerHTML = this.data.portfolio.length === 0 ? '<p style="text-align:center; color:var(--text3); margin:20px 0;">Noch keine Einträge</p>' :
-      this.data.portfolio.map(entry => {
-      const child = this.data.children.find(c => c.id === entry.childId);
-      return `
-        <div class="card">
-          <div style="display:flex; gap:12px; margin-bottom:8px;">
-            <div style="font-size:28px;">${entry.emoji}</div>
-            <div style="flex:1;">
-              <div style="font-size:13px; color:var(--text2);">${entry.createdAt}</div>
-              <div style="font-size:16px; font-weight:500; color:var(--text);">${entry.title}</div>
-            </div>
-          </div>
-          <div style="font-size:13px; color:var(--text3); margin-bottom:8px;">${entry.desc}</div>
-          <span class="tag mint">${entry.category}</span>
-        </div>
-      `;
-    }).join('');
-  },
-
-  deletePortfolio(id) {
-    this.data.portfolio = this.data.portfolio.filter(p => p.id !== id);
     this.saveData();
-    this.updatePortfolioList();
+    document.getElementById('portfolio-title').value = '';
+    document.getElementById('portfolio-desc').value = '';
+    
+    this.updatePortfolio();
+    this.screen('portfolio');
+  },
+
+  updatePortfolio() {
+    const list = document.getElementById('portfolio-list');
+    const select = document.getElementById('portfolio-child');
+    
+    select.innerHTML = '<option value="">-- Kind wählen --</option>' +
+      this.data.children.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+    
+    list.innerHTML = this.data.portfolio.map(item => `
+      <div class="portfolio-item">
+        <div class="port-emoji">${item.emoji}</div>
+        <div class="port-content">
+          <div class="port-title">${item.title}</div>
+          <div class="port-desc">${item.desc}</div>
+          <span class="port-tag">${item.cat}</span>
+        </div>
+      </div>
+    `).join('');
   },
 
   saveDayInfo() {
     const group = document.getElementById('dayinfo-group').value;
-    const mood = document.getElementById('dayinfo-mood').value;
     const activities = document.getElementById('dayinfo-activities').value.trim();
     const notes = document.getElementById('dayinfo-notes').value.trim();
     
-    if (!activities) { alert('Aktivitäten erforderlich'); return; }
+    if (!activities) {
+      alert('Aktivitäten erforderlich');
+      return;
+    }
     
-    this.data.dayreports.push({
-      id: Date.now(),
-      group, mood, activities, notes,
-      date: new Date().toLocaleDateString('de-DE')
-    });
+    this.data.dayinfo = [{ group, activities, notes }];
     this.saveData();
     alert('Tagesrückblick gespeichert!');
-    this.clearForm('dayinfo-');
-    this.go('s-educator-home');
+    this.screen('home');
   },
 
   updateDayInfoGroups() {
-    const groupSelect = document.getElementById('dayinfo-group');
+    const select = document.getElementById('dayinfo-group');
     const groups = [...new Set(this.data.children.map(c => c.group))];
-    groupSelect.innerHTML = '<option value="">-- Wählen --</option>' + 
-      groups.map(g => `<option value="${g}">${g}</option>`).join('');
+    select.innerHTML = groups.map(g => `<option value="${g}">${g}</option>`).join('');
   },
 
-  updateParentDayReports() {
-    const list = document.getElementById('parent-dayreports-list');
-    list.innerHTML = this.data.dayreports.length === 0 ? '<p style="text-align:center; color:var(--text3); margin:20px 0;">Keine Berichte verfügbar</p>' :
-      this.data.dayreports.map(report => `
-      <div class="card">
-        <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-          <div>
-            <div style="font-size:13px; color:var(--text2);">${report.date}</div>
-            <div style="font-size:14px; font-weight:500; color:var(--text);">${report.group}</div>
-          </div>
-          <span style="font-size:20px;">${{sad:'😢',neutral:'😐',happy:'😊','very-happy':'🤩'}[report.mood]}</span>
+  sendMessage() {
+    const input = document.getElementById('msg-input');
+    const text = input.value.trim();
+    
+    if (!text) return;
+    
+    this.data.messages.push({
+      id: Date.now(),
+      sender: this.user.name,
+      role: this.user.role,
+      text,
+      time: new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })
+    });
+    
+    input.value = '';
+    this.saveData();
+    this.updateMessages();
+  },
+
+  updateMessages() {
+    const list = document.getElementById('messages-list');
+    list.innerHTML = this.data.messages.map(msg => `
+      <div class="message-item">
+        <div class="msg-avatar">${msg.sender.charAt(0)}</div>
+        <div class="msg-bubble">
+          <div class="msg-name">${msg.sender}</div>
+          <div class="msg-text">${msg.text}</div>
+          <div class="msg-time">${msg.time}</div>
         </div>
-        <div style="font-size:13px; color:var(--text3);">📋 ${report.activities}</div>
-        ${report.notes ? `<div style="font-size:13px; color:var(--text2); margin-top:8px;">💬 ${report.notes}</div>` : ''}
       </div>
     `).join('');
+    
+    setTimeout(() => {
+      list.parentElement.scrollTop = list.parentElement.scrollHeight;
+    }, 0);
   },
 
   reportAbsence() {
@@ -734,116 +655,100 @@ const app = {
     const to = document.getElementById('absence-to').value;
     const note = document.getElementById('absence-note').value.trim();
     
-    if (!from || !to) { alert('Daten erforderlich'); return; }
+    if (!from || !to) {
+      alert('Daten erforderlich');
+      return;
+    }
     
     this.data.absences.push({
       id: Date.now(),
-      reason, from, to, note,
-      reportedAt: new Date().toLocaleDateString('de-DE')
+      reason,
+      from,
+      to,
+      note
     });
+    
     this.saveData();
     alert('Abwesenheit gemeldet!');
-    this.clearForm('absence-');
-    this.go('s-parent-home');
+    this.screen('home');
   },
 
-  sendMessage() {
-    const input = document.getElementById('msg-input');
-    const text = input.value.trim();
-    if (!text) return;
-    
-    this.data.messages.push({
-      id: Date.now(),
-      sender: this.user.name,
-      role: this.user.role,
-      text: text,
-      timestamp: new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'})
-    });
-    input.value = '';
-    this.saveData();
-    this.updateMessagesList();
-  },
-
-  updateMessagesList() {
-    const list = document.getElementById('messages-list');
-    list.innerHTML = this.data.messages.length === 0 ? '<p style="text-align:center; color:var(--text3); margin:20px 0;">Keine Nachrichten</p>' :
-      this.data.messages.map((msg, idx) => `
-      <div class="message-item ${msg.role === this.user.role && msg.sender === this.user.name ? 'own' : ''}">
-        <div class="message-avatar">${msg.sender.charAt(0).toUpperCase()}</div>
-        <div class="message-bubble">
-          <div class="message-time">${msg.sender} • ${msg.timestamp}</div>
-          <div class="message-text">${msg.text}</div>
-        </div>
-      </div>
-    `).join('');
-    list.scrollTop = list.scrollHeight;
-  },
-
-  updateReports() {
-    document.getElementById('report-children').textContent = this.data.children.length;
-    document.getElementById('report-portfolio').textContent = this.data.portfolio.length;
-    document.getElementById('report-messages').textContent = this.data.messages.length;
-    document.getElementById('report-events').textContent = this.data.events.length;
-  },
-
-  clearForm(prefix) {
-    document.querySelectorAll(`input[id^="${prefix}"], textarea[id^="${prefix}"], select[id^="${prefix}"]`).forEach(el => {
-      if (el.type === 'date') el.valueAsDate = new Date();
-      else el.value = '';
-    });
-  },
-
-  go(screenId) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(screenId).classList.add('active');
-    
-    if (screenId === 's-children') this.updateChildrenList();
-    if (screenId === 's-calendar') this.updateCalendar();
-    if (screenId === 's-portfolio') this.updatePortfolioList();
-    if (screenId === 's-parent-portfolio') this.updateParentPortfolioList();
-    if (screenId === 's-dayinfo') this.updateDayInfoGroups();
-    if (screenId === 's-day-reports') this.updateParentDayReports();
-    if (screenId === 's-messages') this.updateMessagesList();
-    if (screenId === 's-reports') this.updateReports();
-    if (screenId === 's-child-view') this.showParentChildView();
-  },
-
-  showParentChildView() {
-    const view = document.getElementById('parent-child-view');
+  showMyChild() {
+    const detail = document.getElementById('child-detail');
     if (this.data.children.length === 0) {
-      view.innerHTML = '<p style="text-align:center; color:var(--text3); margin:20px 0;">Noch keine Kinder eingerichtet</p>';
+      detail.innerHTML = '<p style="text-align: center; color: var(--text3); padding: 20px;">Noch kein Kind eingerichtet</p>';
       return;
     }
+    
     const child = this.data.children[0];
-    view.innerHTML = `
-      <div class="profile-header">
-        <div class="profile-avatar">${child.emoji}</div>
-        <div class="profile-info">
-          <h3>${child.name}</h3>
-          <p>${child.group}</p>
-          <p>${this.calculateAge(child.birth)} Jahre</p>
-        </div>
-      </div>
-      <div class="section-title">Details</div>
+    detail.innerHTML = `
       <div class="card">
-        <strong>Allergien:</strong><br><p style="margin-top:4px; color:var(--text2);">${child.allergies || '-'}</p>
+        <h2 style="font-size: 24px; margin-bottom: 8px;">${child.name}</h2>
+        <p style="color: var(--text2); margin-bottom: 16px;">${child.group} • ${child.age} Jahre</p>
+        ${child.allergies ? `<p style="color: var(--coral); font-weight: 500;">⚠️ Allergien: ${child.allergies}</p>` : ''}
       </div>
     `;
   },
 
+  screen(name) {
+    document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
+    document.getElementById(name + '-screen').style.display = 'flex';
+    
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+    if (name === 'home') document.querySelectorAll('.nav-btn')[0].classList.add('active');
+    if (name === 'calendar') document.querySelectorAll('.nav-btn')[1].classList.add('active');
+    if (name === 'messages') document.querySelectorAll('.nav-btn')[2].classList.add('active');
+    
+    if (name === 'home' && this.user) this.showHome();
+    if (name === 'children') this.updateChildren();
+    if (name === 'calendar') this.updateEvents();
+    if (name === 'portfolio') this.updatePortfolio();
+    if (name === 'dayinfo') this.updateDayInfoGroups();
+    if (name === 'messages') this.updateMessages();
+    if (name === 'my-child') this.showMyChild();
+    
+    // Setup chip selectors
+    if (name === 'add-portfolio') {
+      document.querySelectorAll('#add-portfolio-screen .chip').forEach(chip => {
+        chip.addEventListener('click', function() {
+          document.querySelectorAll('#add-portfolio-screen .chip').forEach(c => c.classList.remove('active'));
+          this.classList.add('active');
+          document.getElementById('portfolio-category').value = this.dataset.cat;
+        });
+      });
+    }
+  },
+
+  logout() {
+    this.user = null;
+    this.saveData();
+    this.screen = function(name) {
+      document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
+      document.getElementById(name + '-screen').style.display = 'flex';
+    };
+    this.screen('login');
+  },
+
   saveData() {
-    localStorage.setItem('kitakompass-user', JSON.stringify(this.user));
-    localStorage.setItem('kitakompass-data', JSON.stringify(this.data));
+    localStorage.setItem('kita-user', JSON.stringify(this.user));
+    localStorage.setItem('kita-data', JSON.stringify(this.data));
   },
 
   loadData() {
-    const user = localStorage.getItem('kitakompass-user');
-    const data = localStorage.getItem('kitakompass-data');
+    const user = localStorage.getItem('kita-user');
+    const data = localStorage.getItem('kita-data');
     
     if (user) this.user = JSON.parse(user);
     if (data) this.data = JSON.parse(data);
     
     if (this.user) this.showHome();
+  },
+
+  init() {
+    this.loadData();
+    document.getElementById('event-date').valueAsDate = new Date();
+    document.getElementById('absence-from').valueAsDate = new Date();
+    document.getElementById('absence-to').valueAsDate = new Date();
   }
 };
 
